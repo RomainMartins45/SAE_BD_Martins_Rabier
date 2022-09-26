@@ -36,25 +36,21 @@ CREATE TABLE Moniteur (
   prenomM VARCHAR(42),
   ageM INT,
   PRIMARY KEY (idM)
-)
+) ;
 
 CREATE TABLE Cours (
   idCours INT(8),
   typeC VARCHAR(42),
   prix DECIMAL(6,2),
+  nbPersonnes INT(2) CHECK (nbPersonnes <= 10),
+  idType INT(2), 
   PRIMARY KEY (idCours)
-)
+) ;
 
-CREATE TABLE CoursParticulier(
-  idClient INT(8),
-  idCours INT(8) NOT NULL,
-  PRIMARY KEY(idCours,idClient)
-) 
-
-CREATE TABLE CoursCollectif(
-    idCours INT(8) NOT NULL,
-    nbPersonnes INT(2) CHECK (nbPersonnes <= 10),
-    PRIMARY KEY(idCours) 
+CREATE TABLE TypeC (
+  idType INT(2),
+  intituleType VARCHAR(42),
+  PRIMARY KEY(idType)
 )
 
 CREATE TABLE RESERVER(
@@ -66,12 +62,11 @@ CREATE TABLE RESERVER(
     jma DATE,
     heure INT(2),
     PRIMARY KEY(idCours,idClient,idP,idM)
-)
+) ;
 
 -- creation des clés etrangères de la BD GRANDGALOP
 
--- (Faire pour les cours après avoir demander aux profs)
-
+ALTER TABLE COURS ADD FOREIGN KEY (idType) REFERENCES TypeC (idType);
 ALTER TABLE RESERVER ADD FOREIGN KEY (idCours) REFERENCES Cours (idCours);
 ALTER TABLE RESERVER ADD FOREIGN KEY (idClient) REFERENCES Client (idClient);
 ALTER TABLE RESERVER ADD FOREIGN KEY (idP) REFERENCES Poney (idP);
