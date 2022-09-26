@@ -1,16 +1,15 @@
 -- CREATE DATABASE IF NOT EXISTS GRANDGALOP DEFAULT CHARACTER SET utf8
-COLLATE utf8_general_ci ;
+-- COLLATE utf8_general_ci ;
 -- USE GRANDGALOP ;
 
 -- supression des tables de la BD GRANDGALOP
 
-drop RESERVER;
-drop CoursCollectif;
-drop CoursParticulier;
-drop Cours;
-drop Moniteur;
-drop Client;
-drop Poney;
+drop table RESERVER;
+drop table Cours;
+drop table TypeC;
+drop table Moniteur;
+drop table Client;
+drop table Poney;
 
 -- création des tables de la BD GRANDGALOP
 
@@ -40,7 +39,7 @@ CREATE TABLE Moniteur (
 
 CREATE TABLE Cours (
   idCours INT(8),
-  typeC VARCHAR(42),
+  typeCours VARCHAR(42),
   prix DECIMAL(6,2),
   nbPersonnes INT(2) CHECK (nbPersonnes <= 10),
   idType INT(2), 
@@ -51,7 +50,7 @@ CREATE TABLE TypeC (
   idType INT(2),
   intituleType VARCHAR(42),
   PRIMARY KEY(idType)
-)
+) ;
 
 CREATE TABLE RESERVER(
     idCours INT(8),
@@ -66,7 +65,7 @@ CREATE TABLE RESERVER(
 
 -- creation des clés etrangères de la BD GRANDGALOP
 
-ALTER TABLE COURS ADD FOREIGN KEY (idType) REFERENCES TypeC (idType);
+ALTER TABLE Cours ADD FOREIGN KEY (idType) REFERENCES TypeC (idType);
 ALTER TABLE RESERVER ADD FOREIGN KEY (idCours) REFERENCES Cours (idCours);
 ALTER TABLE RESERVER ADD FOREIGN KEY (idClient) REFERENCES Client (idClient);
 ALTER TABLE RESERVER ADD FOREIGN KEY (idP) REFERENCES Poney (idP);
