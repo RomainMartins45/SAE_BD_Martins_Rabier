@@ -42,7 +42,8 @@ CREATE TABLE Cours (
   typeCours VARCHAR(42),
   prix DECIMAL(6,2),
   nbPersonnes INT(2) CHECK (nbPersonnes <= 10),
-  idType INT(2), 
+  idType INT(2),
+  idM INT(8),
   PRIMARY KEY (idCours)
 ) ;
 
@@ -56,11 +57,10 @@ CREATE TABLE RESERVER(
     idCours INT(8),
     idClient INT(8),
     idP INT(8),
-    idM INT(8),
     duree INT(2) CHECK (duree <= 2),
     jma DATE,
     heure INT(2),
-    PRIMARY KEY(idCours,idClient,idP,idM)
+    PRIMARY KEY(idCours,idClient,idP)
 ) ;
 
 -- creation des clés etrangères de la BD GRANDGALOP
@@ -69,4 +69,4 @@ ALTER TABLE Cours ADD FOREIGN KEY (idType) REFERENCES TypeC (idType);
 ALTER TABLE RESERVER ADD FOREIGN KEY (idCours) REFERENCES Cours (idCours);
 ALTER TABLE RESERVER ADD FOREIGN KEY (idClient) REFERENCES Client (idClient);
 ALTER TABLE RESERVER ADD FOREIGN KEY (idP) REFERENCES Poney (idP);
-ALTER TABLE RESERVER ADD FOREIGN KEY (idM) REFERENCES Moniteur (idM);
+ALTER TABLE Cours ADD FOREIGN KEY (idM) REFERENCES Moniteur (idM);
