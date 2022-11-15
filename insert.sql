@@ -19,9 +19,8 @@ INSERT INTO Moniteur VALUES(5,"Allison" ,"Kim",29);
 INSERT INTO TypeC VALUES(0,"Particulier");
 INSERT INTO TypeC VALUES(1,"Collectif");
 
-INSERT INTO Cours VALUES(1,"Pleine air",12,8,1);
-INSERT INTO Cours VALUES(2,"Course",10,1,0);
-
+INSERT INTO Cours VALUES(1,"Pleine air",12,2,1,1);
+INSERT INTO Cours VALUES(2,"Course",10,1,0,1);
 
 
 
