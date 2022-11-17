@@ -87,7 +87,7 @@ public class RequeteBD{
             Statement s = co.createStatement();
             ResultSet rs = s.executeQuery("select * from Cours");
             while (rs.next()){
-                listCours.add(new Cours(rs.getInt(1), rs.getString(2), rs.getFloat(3), rs.getInt(4), recupTypeC(rs.getInt(5)), recupMoniteur(rs.getInt(6))));
+                listCours.add(new Cours(rs.getInt(1), rs.getString(2), rs.getFloat(3), rs.getInt(4), recupTypeC(rs.getInt(5)), recupMoniteur(rs.getInt(6)),rs.getInt(6),rs.getDate(7),rs.getInt(8)));
             }
             return listCours;
         }
@@ -121,7 +121,7 @@ public class RequeteBD{
             ResultSet rs = s.executeQuery("select * from Cours");
             while (rs.next()){
                 if(getNbReserv(rs.getInt(1)) <= rs.getInt(4)){
-                    listCours.add(new Cours(rs.getInt(1), rs.getString(2), rs.getFloat(3), rs.getInt(4), recupTypeC(rs.getInt(5)), recupMoniteur(rs.getInt(6))));
+                    listCours.add(new Cours(rs.getInt(1), rs.getString(2), rs.getFloat(3), rs.getInt(4), recupTypeC(rs.getInt(5)), recupMoniteur(rs.getInt(6)),rs.getInt(6),rs.getDate(7),rs.getInt(8)));
                 }
             }
             return listCours;

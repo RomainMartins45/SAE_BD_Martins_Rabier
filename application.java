@@ -1,3 +1,4 @@
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.InputMismatchException;
@@ -6,10 +7,11 @@ import java.util.Scanner;
 import java.util.Date;
 
 public class application{
-  public static void main(String[] args) {
+  public static void main(String[] args) throws SQLException {
+    ConnexionMySQL co = new ConnexionMySQL("servinfo-mariadb", "DBmartins", "martins", "martins");
     boolean continuer = true;
     while(continuer){
-        // RequeteBD requeteBD = new RequeteBD();
+        RequeteBD requeteBD = new RequeteBD(co);
         System.out.println("|‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|");
         System.out.println("|     APPLICATION GRAND GALOP     |");
         System.out.println("|‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|");
@@ -49,12 +51,11 @@ public class application{
                 System.out.println("Souhaitez vous payé votre cotisation maintenant (OUI/NON)");
                 String cotisation = sc.nextLine();
                 if (cotisation.equals("OUI")){
-                    // Mettre l'id au max + 1 et rajouter le Client dans la BD 
-                    Client client = new Client(0,nom,prenom,poids,true);
+                    Client client = new Client(requeteBD.maxNum()+1,nom,prenom,poids,true);
                 }
                 else if (cotisation.equals("NON")){
                     // Mettre l'id au max + 1
-                    Client client = new Client(0,nom,prenom,poids,false);
+                    Client client = new Client(requeteBD.maxNum()+1,nom,prenom,poids,false);
                 }
                 else{
                     System.out.println("Nous n'avons pas compris votre choix, veuillez vous réinscrire");
@@ -63,15 +64,15 @@ public class application{
 
             case 2:
                 System.out.println("Les poneys présents dans le poney club sont :");
-                // List<Poney> poneys = requeteBD.getListePoneys() récupère la liste des poneys
-                // for (Poney poney : poneys){
-                //     System.out.println(poney);
+                List<Poney> poneys = requeteBD.getListePoneys();
+                for (Poney poney : poneys){
+                    System.out.println(poney);}
                 break;
             case 3:
                 System.out.println("Les cours disponibles sont :");
-                // List<Cours> listeCours = requeteBD.getCoursDisponible() récupère la liste des cours dispo
-                // for (Cours cours : listeCours){
-                //     System.out.println(cours);
+                List<Cours> listeCours = requeteBD.getListeCoursDispo();
+                for (Cours cours : listeCours){
+                    System.out.println(cours);}
                 break;
             case 4:
                 System.out.println("Les moniteurs travaillant au grand galop sont :");
@@ -115,11 +116,7 @@ public class application{
                     System.out.println("|‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|");
                     System.out.println("|        Poneys Disponibles       |");
                     System.out.println("|‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|");
-                    // List<Poney> listeDePoneys = requeteBD.getPoneyDisponiblePourClient(clientAAjouter);
-                    List<Poney> listeDePoneys = new ArrayList<>();
-                    listeDePoneys.add(new Poney(1, "aaaaaaaaaaaaaaaaaaa", Float.parseFloat("42.2")));
-                    listeDePoneys.add(new Poney(2, "b", Float.parseFloat("42.2")));
-                    listeDePoneys.add(new Poney(3, "c", Float.parseFloat("42.2")));
+                    List<Poney> listeDePoneys = requeteBD.getListePoneys();
                     String ligne;
                     int taille;
                     for(int ind =0;ind<listeDePoneys.size();ind++){
@@ -136,18 +133,13 @@ public class application{
                     System.out.println("|_________________________________|");
                     String choixPoney = sc.nextLine();
                     int choixPoneyI = Integer.parseInt(choixPoney);
-                    // Poney poneyChoisis = listeDePoneys.get(choixPoneyI);
+                    Poney poneyChoisis = listeDePoneys.get(choixPoneyI);
 
                     System.out.println("\nVeuillez choisir quel cours vous intéresserez :\n");
                     System.out.println("Cours Disponibles\n");
 
-                    List<Cours> listeDeCours = new ArrayList<>();
-                    // List<Cours> listeDeCours = requeteBD.getCoursDisponible();
+                    List<Cours> listeDeCours = requeteBD.getListeCoursDispo();
                     listeDeCours.add(new Cours(1,"Entrainement",Float.parseFloat("4.5"),1,new TypeC(1, "Exterieur")
-                    ,new Moniteur(1, "a", "a", 20),2,new Date(),14));
-                    listeDeCours.add(new Cours(2,"Entrainement",Float.parseFloat("4.5"),1,new TypeC(1, "Exterieur")
-                    ,new Moniteur(1, "a", "a", 20),2,new Date(),14));
-                    listeDeCours.add(new Cours(3,"Entrainement",Float.parseFloat("4.5"),1,new TypeC(1, "Exterieur")
                     ,new Moniteur(1, "a", "a", 20),2,new Date(),14));
                     String ligneC;
                     int tailleC;
@@ -164,7 +156,7 @@ public class application{
                     }
                     String choixCours = sc.nextLine();
                     int choixCoursI = Integer.parseInt(choixCours);
-                    // Cours coursChoisis = listeDeCours.get(choixCoursI);
+                    Cours coursChoisis = listeDeCours.get(choixCoursI);
 
                 //     System.out.println("Nous ne vous trouvez pas encore inscrit au poney club grand galop\n");
                 //     System.out.println("Veuillez vous inscrire au club avant de vous inscrire à un cours.\n");
