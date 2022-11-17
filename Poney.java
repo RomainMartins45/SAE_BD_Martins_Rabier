@@ -34,6 +34,6 @@ public class Poney {
     }
 
     public String toString(){
-        return "Le poney " + this.idP + " s'appelle " + this.nomP + " et peut porter un poids maximum de " + this.poidsMax; 
+        return this.nomP + " porte " + this.poidsMax; 
     }
 }
