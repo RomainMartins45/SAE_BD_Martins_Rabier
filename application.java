@@ -1,7 +1,9 @@
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Date;
 
 public class application{
   public static void main(String[] args) {
@@ -131,10 +133,39 @@ public class application{
                         System.out.print(ligne);
                         ligne = "";
                     }
-                    System.out.println("|‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|");
+                    System.out.println("|_________________________________|");
+                    String choixPoney = sc.nextLine();
+                    int choixPoneyI = Integer.parseInt(choixPoney);
+                    // Poney poneyChoisis = listeDePoneys.get(choixPoneyI);
 
                     System.out.println("\nVeuillez choisir quel cours vous intéresserez :\n");
-                // else{
+                    System.out.println("Cours Disponibles\n");
+
+                    List<Cours> listeDeCours = new ArrayList<>();
+                    // List<Cours> listeDeCours = requeteBD.getCoursDisponible();
+                    listeDeCours.add(new Cours(1,"Entrainement",Float.parseFloat("4.5"),1,new TypeC(1, "Exterieur")
+                    ,new Moniteur(1, "a", "a", 20),2,new Date(),14));
+                    listeDeCours.add(new Cours(2,"Entrainement",Float.parseFloat("4.5"),1,new TypeC(1, "Exterieur")
+                    ,new Moniteur(1, "a", "a", 20),2,new Date(),14));
+                    listeDeCours.add(new Cours(3,"Entrainement",Float.parseFloat("4.5"),1,new TypeC(1, "Exterieur")
+                    ,new Moniteur(1, "a", "a", 20),2,new Date(),14));
+                    String ligneC;
+                    int tailleC;
+                    for(int ind =0;ind<listeDeCours.size();ind++){
+                        ligneC = (ind+1) + ". " + listeDeCours.get(ind);
+                        tailleC = ligneC.length();     
+                        while (tailleC < 50){
+                            ligneC += " ";
+                            tailleC += 1;
+                        }
+                        ligneC += "\n";
+                        System.out.print(ligneC);
+                        ligneC = "";
+                    }
+                    String choixCours = sc.nextLine();
+                    int choixCoursI = Integer.parseInt(choixCours);
+                    // Cours coursChoisis = listeDeCours.get(choixCoursI);
+
                 //     System.out.println("Nous ne vous trouvez pas encore inscrit au poney club grand galop\n");
                 //     System.out.println("Veuillez vous inscrire au club avant de vous inscrire à un cours.\n");
                 // }
