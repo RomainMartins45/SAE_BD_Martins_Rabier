@@ -19,8 +19,8 @@ INSERT INTO Moniteur VALUES(5,"Allison" ,"Kim",29);
 INSERT INTO TypeC VALUES(0,"Particulier");
 INSERT INTO TypeC VALUES(1,"Collectif");
 
-INSERT INTO Cours VALUES(1,"Pleine air",12,2,1,1);
-INSERT INTO Cours VALUES(2,"Course",10,1,0,1);
+INSERT INTO Cours VALUES(1,"Pleine air",12,2,1,1,1,STR_TO_DATE("August 10 2017", "%M %d %Y"),14);
+INSERT INTO Cours VALUES(2,"Course",10,1,0,1,2,STR_TO_DATE("August 20 2017", "%M %d %Y"),9);
 
 
 
