@@ -1,4 +1,5 @@
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -146,6 +147,45 @@ public class RequeteBD{
         catch(SQLException e){
             // throw new SQLException("Le client n'est pas inscrit");
             return false;
+        }
+    }
+
+    //payer la cotisation (faire passer la cotisation de false à true)
+    public void payerCotisation(Client client) throws SQLException{
+        try{
+            Connection co = this.connexion.getConnexion();
+            if(!client.isCotisation()){
+                PreparedStatement ps = co.prepareStatement("UPDATE Client SET cotisation = true WHERE idClient = ?");
+                ps.setInt(1, client.getId());                
+                ResultSet rs = ps.executeQuery();
+                rs.next();
+                System.out.println("Cotisation payée !");
+            }
+            else{
+                System.out.println("Le client a déjà payer sa cotisation");
+            }
+        }
+        catch(SQLException e){
+            throw new SQLException("le client n'existe pas");
+        }
+    }
+
+    //s'inscrire à un cours
+    public void inscriptionCours(Cours cours, Client client, Poney poney, int duree, Date jjmmaaaa, int heure) throws SQLException{
+        try{
+            Connection co = this.connexion.getConnexion();
+            PreparedStatement ps =co.prepareStatement("INSERT INTO RESERVER VALUES (?, ?, ?, ?, ?, ?)");
+            ps.setInt(1, cours.getIdC());
+            ps.setInt(2, client.getId());
+            ps.setInt(3, poney.getIdP());
+            ps.setInt(4, duree);
+            ps.setDate(5, jjmmaaaa);
+            ps.setInt(6, heure);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+        }
+        catch(SQLException e){
+            throw new SQLException("erreur lors de l'inscription au cours");
         }
     }
 }
