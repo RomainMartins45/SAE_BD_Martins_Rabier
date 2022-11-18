@@ -76,9 +76,9 @@ public class application{
                 break;
             case 4:
                 System.out.println("Les moniteurs travaillant au grand galop sont :");
-                // List<Moniteur> listeMoniteurs = requeteBD.getMoniteurs() récupère la liste des moniteurs
-                // for (Moniteur moniteur : listeMoniteurs){
-                //     System.out.println(moniteur);
+                List<Moniteur> listeMoniteurs = requeteBD.getMoniteurs() récupère la liste des moniteurs
+                for (Moniteur moniteur : listeMoniteurs){
+                    System.out.println(moniteur);
             case 5:
                 System.out.println("Veuillez rentrez vos informations personelles\n");
                 System.out.println("Veuillez rentrez votre prénom");

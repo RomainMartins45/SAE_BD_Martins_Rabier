@@ -148,4 +148,20 @@ public class RequeteBD{
             return false;
         }
     }
+
+    public List<Moniteur> getMoniteurs() throws SQLException{
+        try{
+            List<Moniteur> listMoniteurs = new ArrayList<Moniteur>();
+            Connection co = this.connexion.getConnexion();
+            Statement s = co.createStatement();
+            ResultSet rs = s.executeQuery("select * from Moniteur");
+            while (rs.next()){
+                listMoniteurs.add(new Moniteur(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4)));
+            }
+            return listMoniteurs;
+        }
+        catch(SQLException e){
+            throw new SQLException("Il n'y a pas de moniteurs");
+        }
+    }
 }
