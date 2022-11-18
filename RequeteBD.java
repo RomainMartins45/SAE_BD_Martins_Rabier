@@ -88,7 +88,7 @@ public class RequeteBD{
             Statement s = co.createStatement();
             ResultSet rs = s.executeQuery("select * from Cours");
             while (rs.next()){
-                listCours.add(new Cours(rs.getInt(1), rs.getString(2), rs.getFloat(3), rs.getInt(4), recupTypeC(rs.getInt(5)), recupMoniteur(rs.getInt(6))));
+                listCours.add(new Cours(rs.getInt(1), rs.getString(2), rs.getFloat(3), rs.getInt(4), recupTypeC(rs.getInt(5)), recupMoniteur(rs.getInt(6)),rs.getInt(6),rs.getDate(7),rs.getInt(8)));
             }
             return listCours;
         }
@@ -122,7 +122,7 @@ public class RequeteBD{
             ResultSet rs = s.executeQuery("select * from Cours");
             while (rs.next()){
                 if(getNbReserv(rs.getInt(1)) <= rs.getInt(4)){
-                    listCours.add(new Cours(rs.getInt(1), rs.getString(2), rs.getFloat(3), rs.getInt(4), recupTypeC(rs.getInt(5)), recupMoniteur(rs.getInt(6))));
+                    listCours.add(new Cours(rs.getInt(1), rs.getString(2), rs.getFloat(3), rs.getInt(4), recupTypeC(rs.getInt(5)), recupMoniteur(rs.getInt(6)),rs.getInt(6),rs.getDate(7),rs.getInt(8)));
                 }
             }
             return listCours;
@@ -186,6 +186,23 @@ public class RequeteBD{
         }
         catch(SQLException e){
             throw new SQLException("erreur lors de l'inscription au cours");
+    }
+}
+
+    //récupère la liste des moniteurs 
+    public List<Moniteur> getMoniteurs() throws SQLException{
+        try{
+            List<Moniteur> listMoniteurs = new ArrayList<Moniteur>();
+            Connection co = this.connexion.getConnexion();
+            Statement s = co.createStatement();
+            ResultSet rs = s.executeQuery("select * from Moniteur");
+            while (rs.next()){
+                listMoniteurs.add(new Moniteur(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4)));
+            }
+            return listMoniteurs;
+        }
+        catch(SQLException e){
+            throw new SQLException("Il n'y a pas de moniteurs");
         }
     }
 }

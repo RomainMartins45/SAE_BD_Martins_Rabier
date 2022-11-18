@@ -25,6 +25,6 @@ public class TypeC {
 
     @Override
     public String toString() {
-        return "TypeC [idT=" + idT + ", intituleT=" + intituleT + "]";
+        return this.intituleT;
     }
 }
