@@ -133,11 +133,13 @@ public class RequeteBD{
     }
 
     //vérifie si un client est insrit au club
-    public boolean verifClientInscrit(Client client) throws SQLException{
+    public boolean verifClientInscrit(String prenom,String nom,Float poids) throws SQLException{
         try{
             Connection co = this.connexion.getConnexion();
-            PreparedStatement ps = co.prepareStatement("select * from Client where idClient = ?");
-            ps.setInt(1, client.getId());
+            PreparedStatement ps = co.prepareStatement("select * from Client where nomC = ? and prenomC = ? and poids = ?");
+            ps.setString(1, nom);
+            ps.setString(2, prenom);
+            ps.setFloat(3, poids);
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
                 return true;
@@ -149,6 +151,45 @@ public class RequeteBD{
             return false;
         }
     }
+
+    //Ajouter un client
+    public void addClient(Client client) throws SQLException{
+        try{
+            Connection co = this.connexion.getConnexion();
+            PreparedStatement ps =co.prepareStatement("INSERT INTO CLIENT VALUES (?, ?, ?, ?, ?)");
+            ps.setInt(1, client.getId());
+            ps.setString(2, client.getNom());
+            ps.setString(3, client.getPrenom());
+            ps.setFloat(4, client.getPoids());
+            ps.setBoolean(5, client.isCotisation());
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+        }
+        catch(SQLException e){
+            throw new SQLException("erreur lors de l'inscription au cours");
+    }
+}
+
+    //payer la cotisation (faire passer la cotisation de false à true)
+    public Client getClient(String prenom,String nom,Float poids) throws SQLException{
+        try{
+            Connection co = this.connexion.getConnexion();
+            PreparedStatement ps = co.prepareStatement("select idClient,cotisation from Client where nomC = ? and prenomC = ? and poids = ?");
+            ps.setString(1, nom);
+            ps.setString(2, prenom);
+            ps.setFloat(3, poids);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            int id = rs.getInt(1);
+            boolean cotisation = rs.getBoolean(2);
+            Client client = new Client(id,nom,prenom,poids,cotisation);
+            return client;
+        }
+        catch(SQLException e){
+            throw new SQLException("Le client n'existe pas");
+        }
+    }
+
 
     //payer la cotisation (faire passer la cotisation de false à true)
     public void payerCotisation(Client client) throws SQLException{
@@ -171,16 +212,16 @@ public class RequeteBD{
     }
 
     //s'inscrire à un cours
-    public void inscriptionCours(Cours cours, Client client, Poney poney, int duree, Date jjmmaaaa, int heure) throws SQLException{
+    public void inscriptionCours(Cours cours, Client client, Poney poney) throws SQLException{
         try{
             Connection co = this.connexion.getConnexion();
             PreparedStatement ps =co.prepareStatement("INSERT INTO RESERVER VALUES (?, ?, ?, ?, ?, ?)");
             ps.setInt(1, cours.getIdC());
             ps.setInt(2, client.getId());
             ps.setInt(3, poney.getIdP());
-            ps.setInt(4, duree);
-            ps.setDate(5, jjmmaaaa);
-            ps.setInt(6, heure);
+            ps.setInt(4, cours.getDuree());
+            ps.setDate(5, new java.sql.Date(cours.getDate().getTime()));
+            ps.setInt(6, cours.getHeure());
             ResultSet rs = ps.executeQuery();
             rs.next();
         }
