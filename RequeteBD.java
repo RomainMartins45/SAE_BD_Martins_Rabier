@@ -220,7 +220,7 @@ public class RequeteBD{
             ps.setInt(2, client.getId());
             ps.setInt(3, poney.getIdP());
             ps.setInt(4, cours.getDuree());
-            ps.setDate(5, new java.sql.Date(cours.getDate().getTime()));
+            ps.setDate(5, cours.getDate()));
             ps.setInt(6, cours.getHeure());
             ResultSet rs = ps.executeQuery();
             rs.next();
@@ -245,5 +245,41 @@ public class RequeteBD{
         catch(SQLException e){
             throw new SQLException("Il n'y a pas de moniteurs");
         }
+    }
+
+    //récupère la liste des poneys sur lesquels le client peut monter
+    public List<Poney> getListePoneys(Client client) throws SQLException{
+        try{
+            List<Poney> listPoney = new ArrayList<Poney>();
+            Connection co = this.connexion.getConnexion();
+            Statement s = co.createStatement();
+            ResultSet rs = s.executeQuery("select * from Poney");
+            while (rs.next()){
+                if(client.getPoids() <= rs.getFloat(3)){
+                    listPoney.add(new Poney(rs.getInt(1), rs.getString(2), rs.getFloat(3)));
+                }
+            }
+            return listPoney;
+        }
+        catch(SQLException e){
+            throw new SQLException("Il n'y a pas de poneys éligibles à ce client");
+        }
+    }
+
+    //ajoute un client à la base de donnée
+    public void inscriptionCours(Client client) throws SQLException{
+        try{
+            Connection co = this.connexion.getConnexion();
+            PreparedStatement ps =co.prepareStatement("INSERT INTO Client VALUES (?, ?, ?, ?, ?)");
+            ps.setInt(client.getId());
+            ps.setString(client.getNom());
+            ps.setString(client.getPrenom());
+            ps.setFloat(client.getPoids());
+            ps.setBoolean(client.isCotisation());
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+        }
+        catch(SQLException e){
+            throw new SQLException("erreur lors de l'inscription du client");
     }
 }
