@@ -220,7 +220,7 @@ public class RequeteBD{
             ps.setInt(2, client.getId());
             ps.setInt(3, poney.getIdP());
             ps.setInt(4, cours.getDuree());
-            ps.setDate(5, cours.getDate()));
+            ps.setDate(5, new java.sql.Date(cours.getDate().getTime()));
             ps.setInt(6, cours.getHeure());
             ResultSet rs = ps.executeQuery();
             rs.next();
@@ -271,15 +271,15 @@ public class RequeteBD{
         try{
             Connection co = this.connexion.getConnexion();
             PreparedStatement ps =co.prepareStatement("INSERT INTO Client VALUES (?, ?, ?, ?, ?)");
-            ps.setInt(client.getId());
-            ps.setString(client.getNom());
-            ps.setString(client.getPrenom());
-            ps.setFloat(client.getPoids());
-            ps.setBoolean(client.isCotisation());
+            ps.setInt(1,client.getId());
+            ps.setString(2,client.getNom());
+            ps.setString(3,client.getPrenom());
+            ps.setFloat(4,client.getPoids());
+            ps.setBoolean(5,client.isCotisation());
             ResultSet rs = ps.executeQuery();
             rs.next();
         }
         catch(SQLException e){
             throw new SQLException("erreur lors de l'inscription du client");
     }
-}
+}}

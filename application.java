@@ -126,7 +126,7 @@ public class application{
                     System.out.println("|‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|");
                     System.out.println("|        Poneys Disponibles       |");
                     System.out.println("|‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|");
-                    List<Poney> listeDePoneys = requeteBD.getListePoneys();
+                    List<Poney> listeDePoneys = requeteBD.getListePoneys(clientInscriptionCours);
                     String ligne;
                     int taille;
                     for(int ind =0;ind<listeDePoneys.size();ind++){
