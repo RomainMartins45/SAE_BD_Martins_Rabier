@@ -1,15 +1,15 @@
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Date;
 
 public class application{
-  public static void main(String[] args) {
+  public static void main(String[] args) throws SQLException {
+    ConnexionMySQL co = new ConnexionMySQL("servinfo-mariadb", "DBmartins", "martins", "martins");
     boolean continuer = true;
     while(continuer){
-        // RequeteBD requeteBD = new RequeteBD();
+        RequeteBD requeteBD = new RequeteBD(co);
         System.out.println("|‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|");
         System.out.println("|     APPLICATION GRAND GALOP     |");
         System.out.println("|‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|");
@@ -38,6 +38,7 @@ public class application{
                 System.out.println("Veuillez rentrez votre poids en kilogrammes");
                 String poidsText;
                 Float poids;
+                // Vérifie si l'utilisateur rentre bien un nombre et non un String
                 try{
                     poidsText = sc.nextLine();
                     poids = Float.parseFloat(poidsText);
@@ -46,38 +47,47 @@ public class application{
                     System.out.print("Veuillez rentrez un chiffre\n");
                     break;
                 }
+                // Gére la cotisation de l'utilisateur qui s'inscrit
                 System.out.println("Souhaitez vous payé votre cotisation maintenant (OUI/NON)");
                 String cotisation = sc.nextLine();
                 if (cotisation.equals("OUI")){
-                    // Mettre l'id au max + 1 et rajouter le Client dans la BD 
-                    Client client = new Client(0,nom,prenom,poids,true);
+                    Client client = new Client(requeteBD.maxNum()+1,nom,prenom,poids,true);
+                    requeteBD.addClient(client);
+                    System.out.println("Inscription validée");
                 }
                 else if (cotisation.equals("NON")){
                     // Mettre l'id au max + 1
-                    Client client = new Client(0,nom,prenom,poids,false);
+                    Client client = new Client(requeteBD.maxNum()+1,nom,prenom,poids,false);
+                    requeteBD.addClient(client);
+                    System.out.println("Inscription validée");
                 }
+                // Si l'utilisateur rentre autre chose que "OUI" ou que "NON"
                 else{
                     System.out.println("Nous n'avons pas compris votre choix, veuillez vous réinscrire");
                 }
                 break;
 
             case 2:
+                // Affiche tout les poneys enregistrés dans la BD 
                 System.out.println("Les poneys présents dans le poney club sont :");
-                // List<Poney> poneys = requeteBD.getListePoneys() récupère la liste des poneys
-                // for (Poney poney : poneys){
-                //     System.out.println(poney);
+                List<Poney> poneys = requeteBD.getListePoneys();
+                for (Poney poney : poneys){
+                    System.out.println(poney);}
                 break;
             case 3:
+            // Affiche tout les cours disponibles (ou il reste de la place pour s'inscrire) enregistrés dans la BD 
                 System.out.println("Les cours disponibles sont :");
-                // List<Cours> listeCours = requeteBD.getCoursDisponible() récupère la liste des cours dispo
-                // for (Cours cours : listeCours){
-                //     System.out.println(cours);
+                List<Cours> listeCours = requeteBD.getListeCoursDispo();
+                for (Cours cours : listeCours){
+                    System.out.println(cours);}
                 break;
             case 4:
+            // Affiche tout les moniteurs enregistrés dans la BD 
                 System.out.println("Les moniteurs travaillant au grand galop sont :");
-                // List<Moniteur> listeMoniteurs = requeteBD.getMoniteurs() récupère la liste des moniteurs
-                // for (Moniteur moniteur : listeMoniteurs){
-                //     System.out.println(moniteur);
+                List<Moniteur> listeMoniteurs = requeteBD.getMoniteurs(); // récupère la liste des moniteurs
+                for (Moniteur moniteur : listeMoniteurs){
+                    System.out.println(moniteur);}
+            // Gérera l'inscription à un cours
             case 5:
                 System.out.println("Veuillez rentrez vos informations personelles\n");
                 System.out.println("Veuillez rentrez votre prénom");
@@ -87,39 +97,36 @@ public class application{
                 System.out.println("Veuillez rentrez votre poids en kilogrammes");
                 String poidsTextUtil;
                 Float poidsUtil;
+                Client clientInscriptionCours;
+                // Vérifie si l'utilisateur rentre bien un nombre et non un String
                 try{
                     poidsTextUtil = sc.nextLine();
                     poidsUtil = Float.parseFloat(poidsTextUtil);
                 }
                 catch(NumberFormatException e){
-                    System.out.print("Veuillez rentrez un chiffre\n");
+                    System.out.println("Veuillez rentrez un nombre");
                     break;
                 }
-                System.out.println("Souhaitez vous payé votre cotisation maintenant (OUI/NON)");
-                String cotisationUtil = sc.nextLine();
-                Client clientAAjouter;
-                if (cotisationUtil.equals("OUI")){
-                    // Mettre l'id au max + 1 et rajouter le Client dans la BD 
-                    clientAAjouter = new Client(0,nomUtil,prenomUtil,poidsUtil,true);
+                // Vérifie si le client est inscrit dans la BD 
+                if(requeteBD.verifClientInscrit(prenomUtil, nomUtil, poidsUtil)){
+                    clientInscriptionCours = requeteBD.getClient(prenomUtil, nomUtil, poidsUtil);
                 }
-                else if (cotisationUtil.equals("NON")){
-                    // Mettre l'id au max + 1
-                    clientAAjouter = new Client(0,nomUtil,prenomUtil,poidsUtil,false);
-                }
+                // Le client n'est pas inscrit
                 else{
-                    System.out.println("Nous n'avons pas compris votre choix, veuillez recommencez\n");
+                    System.out.println("Nous ne vous connaissons pas, veuillez vous inscrire avant de réserver un cours");
                     break;
                 }
-                // if(requeteBD.estClient(clientAAjouter)){
+                // vérifie si le client a payé sa cotisation annuelle (cotisation à true)
+                if(!(clientInscriptionCours.isCotisation())){
+                    System.out.println("Veuillez payer votre cotisation annuelle avant de vous inscrire à un cours");
+                    break;
+                }
+                // Affiche la liste des poneys que le client peut avoir (Poids du client est plus petit que le poids max du poney)
                     System.out.println("Veuillez choisir quel poney vous intéresserez :\n");
                     System.out.println("|‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|");
                     System.out.println("|        Poneys Disponibles       |");
                     System.out.println("|‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|");
-                    // List<Poney> listeDePoneys = requeteBD.getPoneyDisponiblePourClient(clientAAjouter);
-                    List<Poney> listeDePoneys = new ArrayList<>();
-                    listeDePoneys.add(new Poney(1, "aaaaaaaaaaaaaaaaaaa", Float.parseFloat("42.2")));
-                    listeDePoneys.add(new Poney(2, "b", Float.parseFloat("42.2")));
-                    listeDePoneys.add(new Poney(3, "c", Float.parseFloat("42.2")));
+                    List<Poney> listeDePoneys = requeteBD.getListePoneys(clientInscriptionCours);
                     String ligne;
                     int taille;
                     for(int ind =0;ind<listeDePoneys.size();ind++){
@@ -136,19 +143,20 @@ public class application{
                     System.out.println("|_________________________________|");
                     String choixPoney = sc.nextLine();
                     int choixPoneyI = Integer.parseInt(choixPoney);
-                    // Poney poneyChoisis = listeDePoneys.get(choixPoneyI);
-
+                    Poney poneyChoisis = new Poney(999999, "nom",Float.parseFloat("999999")); // Si je n'itialise pas le poney, la variable n'est pas reconnu quand je fais inscriptionCours(coursChoisis, clientInscriptionCours, poneyChoisis)
+                    // Récupère le poney dans la liste grâce au choix de l'utilisateur
+                    if(1 <= choixPoneyI || choixPoneyI <= listeDePoneys.size()){
+                        poneyChoisis = listeDePoneys.get(choixPoneyI - 1);
+                    }
+                    else{
+                        System.out.println("Nous n'avons pas compris votre choix, veuillez recommencez\n");
+                        break;
+                    }
+                    // Affichera tout les cours disponibles
                     System.out.println("\nVeuillez choisir quel cours vous intéresserez :\n");
                     System.out.println("Cours Disponibles\n");
 
-                    List<Cours> listeDeCours = new ArrayList<>();
-                    // List<Cours> listeDeCours = requeteBD.getCoursDisponible();
-                    listeDeCours.add(new Cours(1,"Entrainement",Float.parseFloat("4.5"),1,new TypeC(1, "Exterieur")
-                    ,new Moniteur(1, "a", "a", 20),2,new Date(),14));
-                    listeDeCours.add(new Cours(2,"Entrainement",Float.parseFloat("4.5"),1,new TypeC(1, "Exterieur")
-                    ,new Moniteur(1, "a", "a", 20),2,new Date(),14));
-                    listeDeCours.add(new Cours(3,"Entrainement",Float.parseFloat("4.5"),1,new TypeC(1, "Exterieur")
-                    ,new Moniteur(1, "a", "a", 20),2,new Date(),14));
+                    List<Cours> listeDeCours = requeteBD.getListeCoursDispo();
                     String ligneC;
                     int tailleC;
                     for(int ind =0;ind<listeDeCours.size();ind++){
@@ -164,19 +172,58 @@ public class application{
                     }
                     String choixCours = sc.nextLine();
                     int choixCoursI = Integer.parseInt(choixCours);
-                    // Cours coursChoisis = listeDeCours.get(choixCoursI);
-
-                //     System.out.println("Nous ne vous trouvez pas encore inscrit au poney club grand galop\n");
-                //     System.out.println("Veuillez vous inscrire au club avant de vous inscrire à un cours.\n");
-                // }
+                    Cours coursChoisis = listeDeCours.get(choixCoursI);
+                    // Inscrit le client avec le poney choisis  dans le cours
+                    requeteBD.inscriptionCours(coursChoisis, clientInscriptionCours, poneyChoisis);
                 break;
+
+            case 6:
+                System.out.println("Veuillez rentrez vos informations personelles\n");
+                System.out.println("Veuillez rentrez votre prénom");
+                String prenomCotisation = sc.nextLine();
+                System.out.println("Veuillez rentrez votre nom");
+                String nomCotisation = sc.nextLine();
+                System.out.println("Veuillez rentrez votre poids en kilogrammes");
+                String poidsTextCotisation;
+                Float poidsCotisation;
+                Client clientCotisation;
+                // Vérifie si l'utilisateur rentre bien un nombre et non un String
+                try{
+                    poidsTextCotisation = sc.nextLine();
+                    poidsCotisation = Float.parseFloat(poidsTextCotisation);
+                }
+                catch(NumberFormatException e){
+                    System.out.println("Veuillez rentrez un nombre");
+                    break;
+                }
+                // Vérifie si le client est inscrit dans la BD 
+                if(requeteBD.verifClientInscrit(prenomCotisation, nomCotisation, poidsCotisation)){
+                    clientCotisation = requeteBD.getClient(prenomCotisation, nomCotisation, poidsCotisation);
+                }
+                // Le client n'est pas inscrit
+                else{
+                    System.out.println("Nous ne vous connaissons pas, veuillez vous inscrire avant de réserver un cours");
+                    break;
+                }
+                // vérifie si le client a payé sa cotisation annuelle (cotisation à true)
+                if(!(clientCotisation.isCotisation())){
+                    requeteBD.payerCotisation(clientCotisation);
+                    System.out.println("Votre cotisation vient d'être payé, merci à vous.");
+                }
+                else{
+                    System.out.println("Votre cotisation est déjà payé.");
+                }
+                    break;
 
             case 7:
                 continuer = false;
+                System.out.println("Merci et au revoir !");
                 break;
-            }
+            
         }
     }
   }
+}
+
 
 

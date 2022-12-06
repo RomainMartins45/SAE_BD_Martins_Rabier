@@ -44,6 +44,9 @@ CREATE TABLE Cours (
   nbPersonnes INT(2) CHECK (nbPersonnes <= 10),
   idType INT(2),
   idM INT(8),
+  duree INT(2) CHECK (duree <= 2),
+  jma DATE,
+  heure INT(2),
   PRIMARY KEY (idCours)
 ) ;
 
@@ -57,9 +60,6 @@ CREATE TABLE RESERVER(
     idCours INT(8),
     idClient INT(8),
     idP INT(8),
-    duree INT(2) CHECK (duree <= 2),
-    jma DATE,
-    heure INT(2),
     PRIMARY KEY(idCours,idClient,idP)
 ) ;
 
