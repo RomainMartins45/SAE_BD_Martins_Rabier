@@ -1,0 +1,31 @@
+h1 {color: red;}
+
+.sample{
+    text-align: center;
+    width: 100%;
+}
+
+main{
+    margin-top: 8em;
+}
+footer{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+main > .container {
+    padding: 60px 15px 0;
+}
+#nav-button {
+    color: darkgoldenrod;
+    margin-left: 20px;
+}
+.images_book{
+    margin: 2%;
+}
+
+.img_book{
+    width: 27%;
+    margin: auto;
+    display: flex;
+}

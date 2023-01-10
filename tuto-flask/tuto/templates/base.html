@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        {% block head %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{ url_for('static',filename='base.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static',filename='home.css')}}">
+        {% block style %}
+        {% endblock %} 
+        <title>La Grand Galop</title>
+        {% endblock %}
+    </head>
+    <body>
+        <header>
+            <nav>
+              <ul class="nav">
+                <li class = "nav-item"><a href="#">Home</a></li>
+                <li class = "nav-item"><a href="#">test</a></li>
+                <li class = "nav-item"><a href="#">test</a></li>
+                <li class = "nav-item"><a href="#">test</a></li>
+                <li class = "nav-item"><a href="#">test</a></li>
+            </nav> 
+        </header>
+
+        <!-- Begin page content -->
+    <main class="flex-shrink-0">
+        <div class="container">
+            {% block content %}
+
+            {% endblock %}
+        </div>
+    </main>
+
+    <footer class="footer mt-auto py-3 bg-light">
+        <div class="container">
+          <span class="text-muted">Place sticky footer content here.</span>
+        </div>
+      </footer>
+  
+    {% block scripts %}
+    <script>
+    </script>
+    {% endblock %}
+    </body>
+</html>
