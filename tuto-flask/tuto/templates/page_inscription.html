@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
-        <title>Page de connexion</title>
+        <title>Page d'inscription</title>
         <meta charset="utf-8">
         <link rel="stylesheet" href="../static/inscription.css">
     </head>
@@ -10,26 +10,30 @@
         <form id="form-connexion">
             <fieldset>
                 <div>
-                    <label>Nom : </label>
-                    <input type=”text” id="nom" name=”identifiant” class="zonetext" required>
+                    <label>Nom</label>
+                    <input type=”text” id="nom" name=”nom” required>
                 </div>
                 <div>
-                    <label>Prénom : </label>
-                    <input type=”text” id="prenom" name=”identifiant” class="zonetext" required>
+                    <label>Prénom</label>
+                    <input type=”text” id="prenom" name=”prenom” required>
                 </div>
                 <div>
-                    <label>Poids : </label>
-                    <input type=”” id="poids" name=”identifiant” required>
+                    <label>Poids</label>
+                    <input type=”number” id="poids" name=”poids” required>
                 </div>
                 <div>
-                    <label>Identifiant : </label>
-                    <input type=”text” id="identifiant" name=”identifiant” class="zonetext" required>
+                    <label>Identifiant</label>
+                    <input type=”text” id="identifiant" name=”identifiant” required>
                 </div>
                 <div id="motdepasse">
-                    <label>Mot de passe :</label>
-                    <input type=”password” id="mdp" name=”mdp” class="zonetext" required>
+                    <label>Mot de passe</label>
+                    <input type=”password” id="mdp" name=”mdp” required>
                 </div>
-                <input type="submit" value="Se connecter" id="connexion">
+                <div id="payement-coti">
+                    <label>Payer la cotisation</label>
+                    <input type="checkbox" id="cotisation" name="paye-coti">
+                </div>
+                <input type="submit" value="Se connecter" id="inscription">
                 <p id="access"></p>
             </fieldset>           
         </form>

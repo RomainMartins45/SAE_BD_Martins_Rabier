@@ -44,7 +44,7 @@ fieldset{
     cursor: pointer;
     padding: 15px 32px;
     text-align: center;
-    display: inline-block;
+    /* display: inline-block; */
     font-size: 16px;
 }
 

@@ -8,13 +8,9 @@ form{
 #titre{
     text-align: center;
     position: absolute;
-    margin-right: 100px; 
-    top: 25%; 
-    left : 40%;
-}
-
-#motdepasse{
-    margin-top: 25px;
+    /* margin-right: 100px;  */
+    top: 15%; 
+    left : 37%;
 }
 
 fieldset{
@@ -24,11 +20,11 @@ fieldset{
     border : solid 2px black; 
 }
 
-#connexion{
+#inscription{
     margin-top: 25px;
     float: right;
     cursor: pointer;
-    border : solid 2px lightblue;
+    border : solid 2px #add8e6;
     border-radius: 30px;
     color: white;
     padding: 15px 32px;
@@ -39,16 +35,16 @@ fieldset{
 }
 
 fieldset > div{
-    margin-right: 50px;
-    width: 110%
+    display: flex;
+    flex-direction: column;
+    padding: 2%;
+    width: 100%
+    
 }
 
-#mdp{
-    width: 60%;
+#payement-coti{
+    display: flex;
+    flex-direction: row;
 }
 
-#identifiant{
-    margin-left: 22px;
-    width: 60%;
-}
 
