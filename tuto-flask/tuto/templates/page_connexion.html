@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Page de connexion</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="../static/connexion.css">
+    </head>
+    <body>
+        <h1 id="titre">Page de connexion</h1>
+        <form id="form-connexion">
+            <fieldset>
+                <div>
+                    <label>Identifiant : </label>
+                    <input type=”text” id="identifiant" name=”identifiant” class="zonetext" required>
+                </div>
+                <div id="motdepasse">
+                    <label>Mot de passe :</label>
+                    <input type=”password” id="mdp" name=”mdp” class="zonetext" required>
+                </div>
+                <input type="submit" value="Se connecter" id="connexion">
+                <p id="access"></p>
+                <a href="page_inscription.html" id="inscription">S'inscrire</a>
+            </fieldset>           
+        </form>
+    </body>
+</html>

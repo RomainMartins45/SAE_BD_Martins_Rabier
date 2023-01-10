@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Page de connexion</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="../static/inscription.css">
+    </head>
+    <body>
+        <h1 id="titre">Formulaire d'inscription</h1>
+        <form id="form-connexion">
+            <fieldset>
+                <div>
+                    <label>Nom : </label>
+                    <input type=”text” id="nom" name=”identifiant” class="zonetext" required>
+                </div>
+                <div>
+                    <label>Prénom : </label>
+                    <input type=”text” id="prenom" name=”identifiant” class="zonetext" required>
+                </div>
+                <div>
+                    <label>Poids : </label>
+                    <input type=”” id="poids" name=”identifiant” required>
+                </div>
+                <div>
+                    <label>Identifiant : </label>
+                    <input type=”text” id="identifiant" name=”identifiant” class="zonetext" required>
+                </div>
+                <div id="motdepasse">
+                    <label>Mot de passe :</label>
+                    <input type=”password” id="mdp" name=”mdp” class="zonetext" required>
+                </div>
+                <input type="submit" value="Se connecter" id="connexion">
+                <p id="access"></p>
+            </fieldset>           
+        </form>
+    </body>
+</html>
