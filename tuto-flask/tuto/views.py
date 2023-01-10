@@ -7,7 +7,6 @@ from wtforms . validators import DataRequired
 from wtforms import PasswordField
 from hashlib import sha256
 from flask_login import login_user, current_user,login_required,logout_user
-from .connexionPythonSQL import ouvrir_connexion,ListePoneys
 
 
 @app.route("/")

@@ -1,7 +1,7 @@
 -- Pour être reserver, le poids d'un client doit être inférieur au poidsMax d'un poney
 
 delimiter |
-create or replace trigger ReserverBefore before insert on RESERVER for each row
+create or replace trigger ReserverBefore before insert on reserver for each row
 begin
     declare poidsPoney DECIMAL(6,2);
     declare poidsClient DECIMAL(6,2);
@@ -22,7 +22,7 @@ begin
     declare nbPersMax int;
     declare nbPers int;
     select nbPersonnes into nbPersMax from Cours where new.idCours = idCours;
-    select count(idClient) into nbPers from RESERVER where new.idCours = idCours;
+    select count(idClient) into nbPers from reserver where new.idCours = idCours;
     if nbPersMax <= nbPers then
         set mes = "Le nombre de personnes maximum à ce cours à déjà été atteint";
         signal SQLSTATE '45000' set MESSAGE_TEXT = mes;
@@ -30,13 +30,13 @@ begin
 end |
 delimiter ; 
 drop trigger PoidsMaxPoney;
--- insert into RESERVER VALUES(2,1,1,4,1,'2022-09-11',12);
+-- insert into reserver VALUES(2,1,1,4,1,'2022-09-11',12);
 
 
 -- Si un client n'a pas payé la cotisation, il ne peut pas réserver
 
 delimiter |
-create or replace trigger PayeCotisation before insert on RESERVER for each row
+create or replace trigger PayeCotisation before insert on reserver for each row
 begin
     declare aPaye boolean;
     declare mes varchar(100);
@@ -47,7 +47,7 @@ begin
     end if;
 end |
 delimiter ; 
--- insert into RESERVER VALUES(1,4,4,4,1,'2022-09-11',12);
+-- insert into reserver VALUES(1,4,4,4,1,'2022-09-11',12);
 drop trigger PayeCotisation;
 
 
@@ -73,13 +73,13 @@ drop trigger CoursParticulier;
 -- Le nombre d'insertions dans reserver d'un cours ne doit pas etre plus grand que le nombre de personnes maximum
 
 delimiter |
-create or replace trigger CoursCollectifNbPersonnes before insert on RESERVER for each row
+create or replace trigger CoursCollectifNbPersonnes before insert on reserver for each row
 begin  
     declare mes varchar (100);
     declare nbPersMax int;
     declare nbPers int;
     select nbPersonnes into nbPersMax from Cours where new.idCours = idCours;
-    select count(idClient) into nbPers from RESERVER where new.idCours = idCours;
+    select count(idClient) into nbPers from reserver where new.idCours = idCours;
     if nbPersMax <= nbPers then
         set mes = "Le nombre de personnes maximum à ce cours à déjà été atteint";
         signal SQLSTATE '45000' set MESSAGE_TEXT = mes;
@@ -87,15 +87,15 @@ begin
 end |
 delimiter ;
 
--- INSERT INTO RESERVER VALUES(1,3,3,1,'2022-09-11',14);
--- INSERT INTO RESERVER VALUES(1,5,2,1,'2022-09-11',14);
--- INSERT INTO RESERVER VALUES(1,2,5,1,'2022-09-11',14);
+-- INSERT INTO reserver VALUES(1,3,3,1,'2022-09-11',14);
+-- INSERT INTO reserver VALUES(1,5,2,1,'2022-09-11',14);
+-- INSERT INTO reserver VALUES(1,2,5,1,'2022-09-11',14);
 drop trigger CoursCollectifNbPersonnes;
 
 -- Si le poney a eu 2h de cours , il doit avoir une heure de repos
 
 delimiter |
-create or replace trigger PoneyHeureDeRepos before insert on RESERVER for each row
+create or replace trigger PoneyHeureDeRepos before insert on reserver for each row
 begin  
     declare mes varchar (100);
 end |
