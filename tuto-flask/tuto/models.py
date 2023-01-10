@@ -3,58 +3,51 @@ from wtforms import StringField , HiddenField
 from wtforms . validators import DataRequired
 from flask_login import UserMixin
 from .app import *
-from .connexionPythonSQL import *
 
-class Client:
-    def __init__(self,id,nom,prenom,poids,cotisation) -> None:
-        self.id = id
-        self.nom = nom
-        self.prenom = prenom
-        self.poids = poids
-        self.cotisation = cotisation
+class Client(db.Model):
+    idClient = db.Column(db.Integer , primary_key=True)
+    nomC = db.Column(db.String(42))
+    prenomC = db.Column(db.String(42))
+    poids = db.Column(db.Numeric(6,2))
+    cotisation = db.Column(db.Boolean,default = False)
 
-class Poney:
-    def __init__(self,id,nom,poids_max) -> None:
-        self.id_p = id
-        self.nom_p = nom
-        self.poids_max = poids_max
+    def __repr__(self) -> str:
+        return self.prenomC + " " + self.nomC + " " + str(self.idClient) 
+
+class Poney(db.Model):
+    idP = db.Column(db.Integer , primary_key=True)
+    nomP = db.Column(db.String(42))
+    poidsMax = db.Column(db.Numeric(6,2))
     
     def __repr__(self) -> str:
-        return str(self.id_p) + " " + self.nom_p + " " + str(self.poids_max)
+        return str(self.idP) + " " + self.nomP + " " + str(self.poidsMax)
 
-class Moniteur:
-    def __init__(self,id,nom,prenom,age) -> None:
-        self.id = id
-        self.nom = nom
-        self.prenom = prenom
-        self.age = age
+class Moniteur(db.Model):
+    idM = db.Column(db.Integer , primary_key=True)
+    nomM = db.Column(db.String(42))
+    prenomM = db.Column(db.String(42))
+    ageM = db.Column(db.Integer)
         
-class Type_cours:
-    def __init__(self,id,intitule) -> None:
-        self.id = id
-        self.intitule = intitule
+class TypeC(db.Model):
+    idType = db.Column(db.Integer , primary_key=True)
+    intituleType = db.Column(db.String(80))
 
-class Cours:
-    def __init__(self,idC,intituleCours,prix,nbPersonnes,typeC,moniteur,duree,heure,date) -> None: 
-        self.idC = idC
-        self.intituleCours = intituleCours
-        self.prix = prix
-        self.nbPersonnes = nbPersonnes
-        self.typeC = typeC
-        self.moniteur = moniteur
-        self.duree = duree
-        self.heure = heure
-        self.date = date
+class Cours(db.Model):
+    idCours = db.Column(db.Integer , primary_key=True)
+    typeCours = db.Column(db.String(42))
+    prix = db.Column(db.Numeric(6,2))
+    nbPersonnes = db.Column(db.Integer)
+    idType = db.Column(db.Integer,db.ForeignKey("typec.idType"))
+    idM = db.Column(db.Integer,db.ForeignKey("moniteur.idM"))
+    duree = db.Column(db.Integer)
+    jma = db.Column(db.DateTime)
+    heure = db.Column(db.Integer)
 
-class Reservation:
-    def __init__(self,cours,poney,client) -> None:
-        self.cours = cours
-        self.poney = poney
-        self.client = client
-        
-def ListePoneys(connexion):
-    resultat=connexion.execute("select * from Poney")
-    liste = list()
-    for idP,nomP,poids in resultat:
-        liste.append(Poney(idP,nomP,poids))
-    return liste
+class Reserver(db.Model):
+    idCours = db.Column(db.Integer,db.ForeignKey("cours.idCours") , primary_key=True)
+    idClient = db.Column(db.Integer,db.ForeignKey("client.idClient") , primary_key=True)
+    idP = db.Column(db.Integer,db.ForeignKey("poney.idP") , primary_key=True)
+
+def get_poneys():
+    poneys = Poney.query.all()
+    return poneys

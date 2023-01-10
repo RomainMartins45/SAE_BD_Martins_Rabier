@@ -1,3 +1,8 @@
 import click
-from .app import app
-from hashlib import sha256
+from .app import app, db
+from .models import *
+
+@app.cli.command()
+def syncdb():
+    """Creates all missing tables ."""
+    db.create_all()

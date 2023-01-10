@@ -2,19 +2,19 @@
 -- COLLATE utf8_general_ci ;
 -- USE GRANDGALOP ;
 
--- supression des tables de la BD GRANDGALOP
+-- suppression des tables de la BD GRANDGALOP
 
-drop table RESERVER;
-drop table Cours;
-drop table TypeC;
-drop table Moniteur;
-drop table Client;
-drop table Poney;
+drop table reserver;
+drop table cours;
+drop table type_c;
+drop table moniteur;
+drop table client;
+drop table poney;
 
 -- création des tables de la BD GRANDGALOP
 
-CREATE TABLE Client (
-  idClient INT(8),
+CREATE TABLE client (
+  idClient INT,
   nomC VARCHAR(42),
   prenomC VARCHAR(42),
   poids DECIMAL(6, 2),
@@ -22,51 +22,154 @@ CREATE TABLE Client (
   PRIMARY KEY (idClient)
 ) ;
 
-CREATE TABLE Poney (
-  idP INT(8),
+CREATE TABLE poney (
+  idP INT,
   nomP VARCHAR(42),
   poidsMax DECIMAL(6, 2),
   PRIMARY KEY (idP)
 ) ;
 
-CREATE TABLE Moniteur (
-  idM INT(8),
+CREATE TABLE moniteur (
+  idM INT,
   nomM VARCHAR(42),
   prenomM VARCHAR(42),
   ageM INT,
   PRIMARY KEY (idM)
 ) ;
 
-CREATE TABLE Cours (
-  idCours INT(8),
-  typeCours VARCHAR(42),
+CREATE TABLE cours (
+  idCours INT,
+  type_cours VARCHAR(42),
   prix DECIMAL(6,2),
-  nbPersonnes INT(2) CHECK (nbPersonnes <= 10),
-  idType INT(2),
-  idM INT(8),
-  duree INT(2) CHECK (duree <= 2),
+  nbPersonnes INT CHECK (nbPersonnes <= 10),
+  idType INT,
+  idM INT,
+  duree INT CHECK (duree <= 2),
   jma DATE,
-  heure INT(2),
+  heure INT,
   PRIMARY KEY (idCours)
 ) ;
 
-CREATE TABLE TypeC (
-  idType INT(2),
-  intituleType VARCHAR(42),
+CREATE TABLE type_c (
+  idType INT,
+  intituleType VARCHAR(80),
   PRIMARY KEY(idType)
 ) ;
 
-CREATE TABLE RESERVER(
-    idCours INT(8),
-    idClient INT(8),
-    idP INT(8),
+CREATE TABLE reserver(
+    idCours INT,
+    idClient INT,
+    idP INT,
     PRIMARY KEY(idCours,idClient,idP)
 ) ;
 
 -- creation des clés etrangères de la BD GRANDGALOP
 
-ALTER TABLE Cours ADD FOREIGN KEY (idType) REFERENCES TypeC (idType);
-ALTER TABLE RESERVER ADD FOREIGN KEY (idCours) REFERENCES Cours (idCours);
-ALTER TABLE RESERVER ADD FOREIGN KEY (idClient) REFERENCES Client (idClient);
-ALTER TABLE RESERVER ADD FOREIGN KEY (idP) REFERENCES Poney (idP);
-ALTER TABLE Cours ADD FOREIGN KEY (idM) REFERENCES Moniteur (idM);
+ALTER TABLE cours ADD FOREIGN KEY (idType) REFERENCES type_c (idType);
+ALTER TABLE reserver ADD FOREIGN KEY (idCours) REFERENCES cours (idCours);
+ALTER TABLE reserver ADD FOREIGN KEY (idClient) REFERENCES client (idClient);
+ALTER TABLE reserver ADD FOREIGN KEY (idP) REFERENCES poney (idP);
+ALTER TABLE cours ADD FOREIGN KEY (idM) REFERENCES moniteur (idM);
+
+INSERT INTO client VALUES(1,"Dupont","Jean",50.0,false);
+INSERT INTO client VALUES(2,"Jeffrey" ,"Chapman",90.5,true);
+INSERT INTO client VALUES(3,"Michael" ,"Webb",40.6,true);
+INSERT INTO client VALUES(4,"Holly" ,"Russell",30.1,false);
+INSERT INTO client VALUES(5,"Joshua" ,"Gutierrez",45.8,true);
+INSERT INTO client VALUES(6,"Thomas" ,"Dubois",22.4,true);
+INSERT INTO client VALUES(7,"Jhonny" ,"Sins",31.2,true);
+INSERT INTO client VALUES(8,"Brigitte","Marcon",49.3,false);
+INSERT INTO client VALUES(9,"Sophie" ,"Anglade",44.0,false);
+INSERT INTO client VALUES(10,"Thimothée" ,"Jolly",26.6,true);
+INSERT INTO client VALUES(11,"Jacob" ,"Forestier",15.5,true);
+INSERT INTO client VALUES(12,"Thierry" ,"Marmite",30.5,true);
+INSERT INTO client VALUES(13,"Gérard" ,"Impardeux",100.0,false);
+INSERT INTO client VALUES(14,"Zac" ,"Zaun",51.0,true);
+INSERT INTO client VALUES(15,"Léo" ,"Nah",42.2,true);
+INSERT INTO client VALUES(16,"Diana" ,"Lunaris",34.6,false);
+INSERT INTO client VALUES(17,"Aimer" ,"Dinger",16.6,true);
+INSERT INTO client VALUES(18,"René","Kton",36.6,true);
+INSERT INTO client VALUES(19,"Théo" ,"File",21.2,false);
+INSERT INTO client VALUES(20,"Michelle" ,"Michel",44.9,true);
+INSERT INTO client VALUES(21,"Cyprien" ,"Tourette",46.7,false);
+INSERT INTO client VALUES(22,"Michel" ,"Tourniret",70.1,true);
+INSERT INTO client VALUES(23,"Emil" ,"Larsson",23,true);
+INSERT INTO client VALUES(24,"Vincent" ,"Berrié",32,true);
+INSERT INTO client VALUES(25,"Joel" ,"Miro",41,false);
+INSERT INTO client VALUES(26,"Andrei" ,"Pascu",12,true);
+INSERT INTO client VALUES(27,"Adrian" ,"Trybus",22,true);
+INSERT INTO client VALUES(28,"Andrei" ,"Dragomir",34,false);
+INSERT INTO client VALUES(29,"Patrik" ,"Jiru",16,true);
+INSERT INTO client VALUES(30,"Louis" ,"Schmitz",24,true);
+INSERT INTO client VALUES(31,"Elias" ,"Lipp",41,false);
+INSERT INTO client VALUES(32,"Raphaël" ,"Crabbé",21,true);
+INSERT INTO client VALUES(33,"Victor" ,"Lirola",32,true);
+INSERT INTO client VALUES(34,"Javier" ,"Prades",34,true);
+INSERT INTO client VALUES(35,"Yasin" ,"Dinçer",26,true);
+INSERT INTO client VALUES(36,"Norman" ,"Kaiser",44,true);
+INSERT INTO client VALUES(37,"William" ,"Nieminen",13,true);
+INSERT INTO client VALUES(38,"Jean" ,"Massol",36,true);
+INSERT INTO client VALUES(39,"Daniel" ,"Gamani",21,false);
+INSERT INTO client VALUES(40,"Erik" ,"Wessén",24,true);
+INSERT INTO client VALUES(41,"Thomas" ,"Huber",21,true);
+INSERT INTO client VALUES(42,"Matthew" ,"Charles",46,true);
+INSERT INTO client VALUES(43,"Illias" ,"Bizriken",21,true);
+INSERT INTO client VALUES(44,"Tobiasz" ,"Ciba",35,true);
+INSERT INTO client VALUES(45,"Barney" ,"Morris",36,true);
+INSERT INTO client VALUES(46,"Luka" ,"Perkovic",42,true);
+INSERT INTO client VALUES(47,"Matyas" ,"Orsag",26,true);
+INSERT INTO client VALUES(48,"Peter" ,"Freyschuss",14,true);
+INSERT INTO client VALUES(49,"Oskar" ,"Boderek",27,true);
+INSERT INTO client VALUES(50,"Duncan" ,"Marquet",31,true);
+
+
+INSERT INTO poney VALUES(1,"Eclair",45.0);
+INSERT INTO poney VALUES(2,"Noisette",50.5);
+INSERT INTO poney VALUES(3,"Kiwi",35.0);
+INSERT INTO poney VALUES(4,"Celestia",40.6);
+INSERT INTO poney VALUES(5,"Luna",29.1);
+INSERT INTO poney VALUES(6,"Chupa",41.5);
+INSERT INTO poney VALUES(7,"Choops",27.4);
+INSERT INTO poney VALUES(8,"Cheval",39.0);
+INSERT INTO poney VALUES(9,"Karim",45.0);
+INSERT INTO poney VALUES(10,"Haribo",36.7);
+INSERT INTO poney VALUES(11,"Réglisse",31.5);
+INSERT INTO poney VALUES(12,"Tagada",27.8);
+INSERT INTO poney VALUES(13,"Krema",38.7);
+INSERT INTO poney VALUES(14,"Spirit",46.9);
+INSERT INTO poney VALUES(15,"Noireaude",33.3);
+INSERT INTO poney VALUES(16,"Bloudy",31.1);
+INSERT INTO poney VALUES(17,"Rick",51.0);
+INSERT INTO poney VALUES(18,"Arde",51.0);
+INSERT INTO poney VALUES(19,"Ruby",55.5);
+INSERT INTO poney VALUES(20,"Volta",44.4);
+INSERT INTO poney VALUES(21,"Ticky",46.8);
+INSERT INTO poney VALUES(22,"Keto",29.7);
+INSERT INTO poney VALUES(23,"Lucifer",66.6);
+INSERT INTO poney VALUES(24,"Jeanne",45.0);
+INSERT INTO poney VALUES(25,"Ferrari",35.1);
+INSERT INTO poney VALUES(26,"Mimi",27.7);
+INSERT INTO poney VALUES(27,"Macaron",49.3);
+INSERT INTO poney VALUES(28,"Merry",41.4);
+INSERT INTO poney VALUES(29,"Buffy",56.7);
+INSERT INTO poney VALUES(30,"Ryuk",65.0);
+
+
+
+INSERT INTO moniteur VALUES(1,"Christopher" ,"Stark",20);
+INSERT INTO moniteur VALUES(2,"Kelly" ,"Mueller",19);
+INSERT INTO moniteur VALUES(3,"David" ,"Jones",36);
+INSERT INTO moniteur VALUES(4,"William" ,"Rogers",24);
+INSERT INTO moniteur VALUES(5,"Allison" ,"Kim",29);
+
+
+
+INSERT INTO type_c VALUES(0,"Particulier");
+INSERT INTO type_c VALUES(1,"Collectif");
+
+INSERT INTO cours VALUES(1,"Pleine air",12,2,1,1,1,STR_TO_DATE("August 10 2017", "%M %d %Y"),14);
+INSERT INTO cours VALUES(2,"Course",10,1,0,1,2,STR_TO_DATE("August 20 2017", "%M %d %Y"),9);
+
+INSERT INTO reserver VALUES(1, 3, 1);
+INSERT INTO reserver VALUES(1, 4, 4);
+
