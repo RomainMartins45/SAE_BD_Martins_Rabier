@@ -5,6 +5,12 @@
     font-family: 'Josefin Sans',sans-serif;
 }
 
+.img_poneys{
+    width: 75%;
+    margin: auto;
+    display: flex;
+}
+
 body{
     background-image:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)), url(./background.jpg);
     background-size: cover;
@@ -14,6 +20,13 @@ body{
     width: 100%;
     height: 100%;
     background-color: black;
+}
+
+.poney{
+    display: flex;
+    flex-direction: column;
+    padding: 1%;
+    width: 50%;
 }
 
 nav{
@@ -45,3 +58,9 @@ nav ul li a:hover{
     color: #ea1538;
     transition: .3s;
 }
+
+.sample{
+    text-align: center;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;}

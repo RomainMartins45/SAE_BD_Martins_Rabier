@@ -24,7 +24,8 @@ def inscription():
 
 @app.route("/detail")
 def detail():
-    return render_template("detail.html")
+    poneys = get_poneys()
+    return render_template("detail.html",poneys=poneys)
 
 @app.route("/profil")
 def profil():
