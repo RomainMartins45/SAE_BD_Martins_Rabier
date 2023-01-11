@@ -6,3 +6,4 @@ from .models import *
 def syncdb():
     """Creates all missing tables ."""
     db.create_all()
+
