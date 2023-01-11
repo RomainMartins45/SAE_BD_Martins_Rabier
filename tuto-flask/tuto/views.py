@@ -9,6 +9,8 @@ from hashlib import sha256
 from flask_login import login_user, current_user,login_required,logout_user
 from .models import *
 
+SECRET_KEY = os.urandom(32)
+app.config['SECRET_KEY'] = SECRET_KEY
 
 @app.route("/")
 def home():
@@ -24,8 +26,17 @@ def inscription():
 
 @app.route("/detail")
 def detail():
+    f = SearchForm()
     poneys = get_poneys()
-    return render_template("detail.html",poneys=poneys)
+    return render_template("detail.html",poneys=poneys,f=f)
+
+@app.route("/detail_trier",methods=["POST"])
+def trier_poneys():
+    f = SearchForm()
+    print(f.poids)
+    poneys = get_poneys_poids(f.poids.data)
+    return render_template("detail.html",poneys=poneys,f=f)
+
 
 @app.route("/profil")
 def profil():

@@ -18,9 +18,15 @@ class Poney(db.Model):
     idP = db.Column(db.Integer , primary_key=True)
     nomP = db.Column(db.String(42))
     poidsMax = db.Column(db.Numeric(6,2))
+
+    def getPoids(self):
+        return self.poidsMax
     
     def __repr__(self) -> str:
         return str(self.idP) + " " + self.nomP + " " + str(self.poidsMax)
+
+class SearchForm(FlaskForm):
+    poids = StringField("Poids",validators =[DataRequired()])
 
 class Moniteur(db.Model):
     idM = db.Column(db.Integer , primary_key=True)
@@ -51,3 +57,11 @@ class Reserver(db.Model):
 def get_poneys():
     poneys = Poney.query.all()
     return poneys
+    
+def get_poneys_poids(poids):
+    poneys_tri = []
+    poneys = Poney.query.all()
+    for poney in poneys:
+        if str(poney.getPoids()) >= poids:
+            poneys_tri.append(poney)
+    return poneys_tri
