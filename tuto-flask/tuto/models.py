@@ -49,10 +49,20 @@ class Cours(db.Model):
     jma = db.Column(db.DateTime)
     heure = db.Column(db.Integer)
 
+    def get_id(self):
+        return self.idCours
+
+    def get_nb_pers(self):
+        return self.nbPersonnes
+
 class Reserver(db.Model):
     idCours = db.Column(db.Integer,db.ForeignKey("cours.idCours") , primary_key=True)
     idClient = db.Column(db.Integer,db.ForeignKey("client.idClient") , primary_key=True)
     idP = db.Column(db.Integer,db.ForeignKey("poney.idP") , primary_key=True)
+
+@login_manager.user_loader
+def load_user(idClient):
+    return Client.query.filter(Client.idClient == idClient).first()
 
 def get_poneys():
     poneys = Poney.query.all()
@@ -65,3 +75,15 @@ def get_poneys_poids(poids):
         if str(poney.getPoids()) >= poids:
             poneys_tri.append(poney)
     return poneys_tri
+
+def get_nb_reserv(idCours):
+    listeReserve = Reserver.query.filter(Reserver.idCours == idCours).all()
+    return len(listeReserve)
+
+def get_liste_cours_dispo():
+    listeCoursDispo = list()
+    listeCours = Cours.query.all()
+    for cours in listeCours:
+        if get_nb_reserv(cours.get_id()) < cours.get_nb_pers():
+            listeCoursDispo.append(cours)
+    return listeCoursDispo

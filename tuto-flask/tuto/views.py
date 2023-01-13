@@ -14,7 +14,7 @@ app.config['SECRET_KEY'] = SECRET_KEY
 
 @app.route("/")
 def home():
-    return render_template("accueil.html")
+    return render_template("home.html")
 
 @app.route("/login")
 def connexion():
