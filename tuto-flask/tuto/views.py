@@ -33,7 +33,6 @@ def detail():
 @app.route("/detail_trier",methods=["POST"])
 def trier_poneys():
     f = SearchForm()
-    print(f.poids)
     poneys = get_poneys_poids(f.poids.data)
     return render_template("detail.html",poneys=poneys,f=f)
 
@@ -45,6 +44,11 @@ def profil():
 @app.route("/reservation")
 def reservation():
     return render_template("reservation.html")
+
+@app.route("/cours")
+def cours_dispo():
+    coursDispo = get_liste_cours_dispo()
+    return render_template("cours.html",cours= coursDispo)
 
 class LoginForm(FlaskForm):
     username = StringField("Username")

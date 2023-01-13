@@ -62,7 +62,7 @@ nav{
 nav ul li{
     list-style-type: none;
     display: inline-block;
-    padding: 10px 100px; 
+    padding: 10px 80px; 
 }
 
 nav ul li a{
@@ -81,3 +81,198 @@ nav ul li a:hover{
     width: 100%;
     display: flex;
     flex-wrap: wrap;}
+
+/* css pour cours.html */
+
+ul{
+
+    padding: 0;
+
+}
+
+#liste_participants{
+
+    padding: 2vh 2vh;
+
+}
+
+li{
+
+    margin: 2vh 0
+
+}
+
+.fiche_profil{
+
+    display: flex;
+
+    padding: 1vh 2vw;
+
+    gap: 0 2vw;
+
+    align-items: center;
+
+    width: 100%;
+
+}
+
+.fiche_profil > section{
+
+    display: flex;
+
+    gap: 0 3vw;
+
+    flex-wrap: wrap;
+
+}
+
+.pdp_util{
+
+    width: 3em;
+
+    height: 3em;
+}
+
+#home_div{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    margin-top: 3%;
+}
+
+#presentation{
+    width: 71%;
+    padding: 0% 12%;
+    font-size: 150%;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+}
+
+#bienvenue{
+    font-size: 300%;
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+#form-connexion{
+    position: absolute;
+    top: 50%; 
+    left: 46%; 
+    transform: translate(-50%, -50%);
+}
+
+#titre-c{
+    text-align: center;
+    position: absolute;
+    margin-right: 100px; 
+    top: 25%; 
+    left : 40%;
+}
+
+#motdepasse{
+    margin-top: 25px;
+}
+
+fieldset{
+    padding : 50px;
+    width :100%;
+    border-radius: 30px;
+    border : solid 2px black; 
+    margin-left: 10%;
+}
+
+#connexion{
+    margin-top: 25px;
+    float: right;
+    cursor: pointer;
+    border : solid 2px lightblue;
+    border-radius: 30px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    background-color: lightblue;
+}
+
+#inscription{
+    margin-top: 25px;
+    float: left;
+    cursor: pointer;
+    padding: 15px 32px;
+    text-align: center;
+    /* display: inline-block; */
+    font-size: 16px;
+}
+
+fieldset > div{
+    margin-right: 50px;
+    width: 110%
+}
+
+#mdp{
+    width: 60%;
+}
+
+#identifiant{
+    margin-left: 22px;
+    width: 60%;
+}
+
+
+
+
+
+
+
+
+#form-inscription{
+    position: absolute;
+    top: 50%; 
+    left: 46%; 
+    transform: translate(-50%, -50%);
+}
+
+#titre{
+    text-align: center;
+    position: absolute;
+    /* margin-right: 100px;  */
+    top: 15%; 
+    left : 37%;
+}
+
+#fieldset-inscription{
+    padding : 50px;
+    width :100%;
+    border-radius: 30px;
+    border : solid 2px black; 
+}
+
+#inscription{
+    margin-top: 10px;
+    float: right;
+    cursor: pointer;
+    border : solid 2px #add8e6;
+    border-radius: 30px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    background-color: lightblue;
+    margin-right: 15%;
+}
+
+#fieldset-inscription > div{
+    display: flex;
+    flex-direction: column;
+    padding: 2%;
+    width: 100%
+    
+}
+
+#payement-coti{
+    display: flex;
+    flex-direction: row;
+}

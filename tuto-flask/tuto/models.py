@@ -40,7 +40,7 @@ class TypeC(db.Model):
 
 class Cours(db.Model):
     idCours = db.Column(db.Integer , primary_key=True)
-    typeCours = db.Column(db.String(42))
+    type_cours = db.Column(db.String(42))
     prix = db.Column(db.Numeric(6,2))
     nbPersonnes = db.Column(db.Integer)
     idType = db.Column(db.Integer,db.ForeignKey("typec.idType"))

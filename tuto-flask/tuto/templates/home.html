@@ -2,9 +2,14 @@
 {% block style %}
 {{ super () }}
 {% endblock %}
-<link rel="stylesheet" href="{{ url_for('static',filename='home.css')}}">
+<link rel="stylesheet" href="{{ url_for('static',filename='main.css')}}">
 {% block content %}
-    <p>L'écurie de Poneys Grand Galop est le lieu idéal pour les personnes qui souhaitent découvrir l'équitation. Nous avons une équipe dévouée et expérimentée pour prendre soin de nos poneys et pour enseigner les bases de l'équitation de manière ludique et sécurisée. Nous proposons des cours d'équitation adaptés aux cavaliers, des balades à dos de poney dans la nature. Nous avons une variété de poneys dociles et affectueux au sein de notre écurie. Rejoignez notre communauté d'amoureux des poneys et venez vivre des moments inoubliables avec nos petits compagnons à quatre pattes.</p>
-{% endblock %}
+<p id = "bienvenue">Bienvenue au Grand Galop !</p>
+<div id = "home_div">
+    <img class = "img_accueil" src="{{ url_for('static', filename='images/accueil.jpg')}}"
+            alt="accueil" title="accueil"/>
+    <p id = "presentation">L'écurie de Poneys Grand Galop est le lieu idéal pour les personnes qui souhaitent découvrir l'équitation. Nous avons une équipe dévouée et expérimentée pour prendre soin de nos poneys et pour enseigner les bases de l'équitation de manière ludique et sécurisée. Nous proposons des cours d'équitation adaptés aux cavaliers, des balades à dos de poney dans la nature. Nous avons une variété de poneys dociles et affectueux au sein de notre écurie. Rejoignez notre communauté d'amoureux des poneys et venez vivre des moments inoubliables avec nos petits compagnons à quatre pattes.</p>
+</div>
+    {% endblock %}
     </body>
 </html>

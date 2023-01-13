@@ -1,0 +1,28 @@
+{% extends "accueil.html" %}
+{% block style %}
+{{ super () }}
+{% endblock %}
+<link rel='stylesheet' type='text/css' media='screen' href='../static/main.css'>
+{% block content %}
+<div id="liste_participants">
+    <ul id="participants">
+        <li>
+            <section class="fiche_profil">
+                <section id="informations_util">
+                    <p>Prenom</p>
+                    <p>Nom</p>
+                    <p>Pays</p>
+                    <p>Société</p>
+                    <button id="fiche" type="button">Afficher le profil</button>
+                </section>
+            </section>
+        </li>
+    </ul>
+</div>
+
+{% endblock %}
+
+{% block scripts%}
+{{ super () }}
+{% endblock %}
+</html>
