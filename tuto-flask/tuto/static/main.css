@@ -84,25 +84,42 @@ nav ul li a:hover{
 
 /* css pour cours.html */
 
-ul{
-
-    padding: 0;
-
-}
-
 #liste_participants{
 
     padding: 2vh 2vh;
 
 }
 
+#participants{
+    padding: 0;
+}
+
 li{
 
-    margin: 2vh 0
+    margin: 2vh 0;
+
+    list-style-type: none;
 
 }
 
-.fiche_profil{
+#button_poney{
+    float: right;
+    cursor: pointer;
+    border : solid 2px lightblue;
+    border-radius: 3px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    background-color: lightblue;
+}
+
+#lien_poney{
+    text-decoration: none;
+}
+
+.fiche_cours{
 
     display: flex;
 
@@ -114,6 +131,17 @@ li{
 
     width: 100%;
 
+    height: 10%;
+
+    background-color: white;
+
+    border :1px solid black;
+
+}
+
+.fiche_cours > p{
+    padding :5px;
+    width: 100%;
 }
 
 .fiche_profil > section{

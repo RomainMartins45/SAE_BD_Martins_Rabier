@@ -1,0 +1,22 @@
+{% extends "accueil.html" %}
+{% block style %}
+{{ super () }}
+{% endblock %}
+<link rel='stylesheet' type='text/css' media='screen' href='../static/main.css'>
+{% block content %}
+    <div class="sample">
+        {% for x in poneys %}
+        <div class ="poney">
+            <a>
+            <img class = "img_poneys" src="{{ url_for('static', filename='images/background.jpg')}}"
+            alt="{{x.title}}" title="{{x.title}}" style="margin-bottom: 1%;"/></a>
+            <p style="color: white;"> {{ x.nomP }} , {{ x.poidsMax }} kg</p>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block scripts%}
+{{ super () }}
+{% endblock %}
+</html>
