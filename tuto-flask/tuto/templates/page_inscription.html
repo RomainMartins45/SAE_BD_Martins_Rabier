@@ -1,14 +1,11 @@
-<!DOCTYPE html>
-<html lang="fr">
-    <head>
-        <title>Page d'inscription</title>
-        <meta charset="utf-8">
-        <link rel="stylesheet" href="../static/inscription.css">
-    </head>
-    <body>
+{% extends "accueil.html" %}
+{% block style %}
+{{ super () }}
+{% endblock %}
+{% block content %}
         <h1 id="titre">Formulaire d'inscription</h1>
         <form id="form-inscription">
-            <fieldset>
+            <fieldset id ="fieldset-inscription">
                 <div>
                     <label>Nom</label>
                     <input type=”text” id="nom" name=”nom” required>
@@ -37,5 +34,5 @@
                 <p id="access"></p>
             </fieldset>           
         </form>
-    </body>
+{% endblock %}
 </html>

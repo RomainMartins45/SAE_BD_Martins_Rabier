@@ -9,10 +9,12 @@ from hashlib import sha256
 from flask_login import login_user, current_user,login_required,logout_user
 from .models import *
 
+SECRET_KEY = os.urandom(32)
+app.config['SECRET_KEY'] = SECRET_KEY
 
 @app.route("/")
 def home():
-    return render_template("accueil.html")
+    return render_template("home.html")
 
 @app.route("/login")
 def connexion():
@@ -24,7 +26,16 @@ def inscription():
 
 @app.route("/detail")
 def detail():
-    return render_template("detail.html")
+    f = SearchForm()
+    poneys = get_poneys()
+    return render_template("detail.html",poneys=poneys,f=f)
+
+@app.route("/detail_trier",methods=["POST"])
+def trier_poneys():
+    f = SearchForm()
+    poneys = get_poneys_poids(f.poids.data)
+    return render_template("detail.html",poneys=poneys,f=f)
+
 
 @app.route("/profil")
 def profil():
@@ -33,6 +44,18 @@ def profil():
 @app.route("/reservation")
 def reservation():
     return render_template("reservation.html")
+
+@app.route("/cours")
+def cours_dispo():
+    coursDispo = get_liste_cours_dispo()
+    return render_template("cours.html",cours= coursDispo)
+
+@app.route("/choix_poney/<username><int:idCours>")
+def choix_poney(username,idCours):
+    userConnecte = Client.query.filter(Client.username == username).first()
+    poids = userConnecte.getPoids()
+    listePoney = get_poneys_poids(poids)
+    return render_template("choix_poney.html",poneys= listePoney)
 
 class LoginForm(FlaskForm):
     username = StringField("Username")

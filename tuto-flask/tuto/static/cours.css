@@ -1,0 +1,62 @@
+
+header > div{
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin: 3vh 3vw;
+} 
+
+ul{
+
+    padding: 0;
+
+}
+
+#liste_participants{
+
+    padding: 2vh 2vh;
+
+}
+
+li{
+
+    margin: 2vh 0
+
+}
+
+.fiche_profil{
+
+    display: flex;
+
+    padding: 1vh 2vw;
+
+    gap: 0 2vw;
+
+    align-items: center;
+
+}
+
+.fiche_profil > section{
+
+    display: flex;
+
+    gap: 0 3vw;
+
+    flex-wrap: wrap;
+
+}
+
+.pdp_util{
+
+    width: 3em;
+
+    height: 3em;
+
+}
+
+
+

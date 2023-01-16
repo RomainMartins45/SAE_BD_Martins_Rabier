@@ -1,0 +1,30 @@
+{% extends "accueil.html" %}
+{% block style %}
+{{ super () }}
+{% endblock %}
+<link rel='stylesheet' type='text/css' media='screen' href='../static/main.css'>
+{% block content %}
+{% for cour in cours %}
+<div id="liste_participants">
+    <ul id="participants">
+        <li>
+            <section class="fiche_cours">
+                    <p>{{ cour.type_cours }}</p>
+                    <p>{{ cour.prix }} €</p>
+                    <p>{{ cour.nbPersonnes }} personne(s) max</p>
+                    <p>{{ cour.duree }} heure(s)</p>
+                    <p>{{ cour.jma }} à {{ cour.heure }} heures</p>
+                    <button type = "button" id = "button_poney">
+                    <a id="lien_poney" href="{{ url_for("choix_poney",idCours = cour.idCours,username = current_user.username) }}">Choisir un poney</a></button>
+            </section>
+        </li>
+    </ul>
+</div>
+{% endfor %}
+
+{% endblock %}
+
+{% block scripts%}
+{{ super () }}
+{% endblock %}
+</html>
