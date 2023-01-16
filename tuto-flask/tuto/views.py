@@ -50,6 +50,13 @@ def cours_dispo():
     coursDispo = get_liste_cours_dispo()
     return render_template("cours.html",cours= coursDispo)
 
+@app.route("/choix_poney/<username><int:idCours>")
+def choix_poney(username,idCours):
+    userConnecte = Client.query.filter(Client.username == username).first()
+    poids = userConnecte.getPoids()
+    listePoney = get_poneys_poids(poids)
+    return render_template("choix_poney.html",poneys= listePoney)
+
 class LoginForm(FlaskForm):
     username = StringField("Username")
     password = PasswordField("Password")

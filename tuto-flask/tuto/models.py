@@ -13,6 +13,9 @@ class Client(db.Model):
 
     def __repr__(self) -> str:
         return self.prenomC + " " + self.nomC + " " + str(self.idClient) 
+    
+    def getPoids(self):
+        return self.poids
 
 class Poney(db.Model):
     idP = db.Column(db.Integer , primary_key=True)
