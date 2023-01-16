@@ -66,12 +66,9 @@ class LoginForm(FlaskForm):
         user = Client.query.get(self.username.data)
         if user is None:
             return None
-        m = sha256()
-        m.update(self.password.data.encode())
-        passwd = m.hexdigest()
-        return user if passwd == user.password else None
+        return user if self.password.data == user.mdp else None
 
-@app.route("/login/", methods =("GET","POST",))
+@app.route("/login", methods =("GET","POST",))
 def login():
     f = LoginForm()
     if not f.is_submitted():
@@ -80,24 +77,37 @@ def login():
         user = f.get_authenticated_user()
         if user:
             login_user(user)
-            next = f.next.data or url_for("home")
+            next = f.next.data or url_for("accueil")
             return redirect(next)
-    return render_template("login.html",form=f)
-
-@app.route("/login/", methods =("GET","POST",))
-def register():
-    f = LoginForm()
-    if not f.is_submitted():
-        f.next.data = request.args.get("next")
-    elif f.validate_on_submit():
-        user = f.get_authenticated_user()
-        if user:
-            login_user(user)
-            next = f.next.data or url_for("home")
-            return redirect(next)
-    return render_template("login.html",form=f)
+    if (current_user.is_authenticated):
+        return render_template("accueil.html",form=f)
 
 @app.route("/logout/")
 def logout():
     logout_user()
-    return redirect(url_for("home"))
+    return redirect(url_for("accueil.html"))
+
+@app.route("/register", methods=["POST"])
+def register():
+    nomC = request.form.get("nom")
+    prenomC = request.form.get("prenom")
+    poids = request.form.get("poids")
+    username = request.form.get("identifiant")
+    mdp = request.form.get("mdp")
+    cotisation = request.form.get("paye-coti")
+
+    user = Client.query.filter(Client.username==username).first() 
+
+    if user:
+        return redirect(url_for('auth.inscription'))
+
+    id = max_id_client()
+    if id is None:
+        id = 1
+    new_user = Client(idClient=id,nomC=nomC, prenomC=prenomC, poids=poids, cotisation=cotisation, username=username, password=mdp)
+
+    db.session.add(new_user)
+    db.session.commit()
+
+    return redirect(url_for('auth.login'))
+    
