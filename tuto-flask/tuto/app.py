@@ -13,7 +13,7 @@ def mkpath(p):
     os.path.dirname(__file__),
     p))
 
-app.config['SQLALCHEMY_DATABASE_URI'] = ("mysql+pymysql://martins:martins@servinfo-mariadb/DBmartins")
+app.config['SQLALCHEMY_DATABASE_URI'] = ("mysql+pymysql://rabier:rabier@servinfo-mariadb/DBrabier")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
     

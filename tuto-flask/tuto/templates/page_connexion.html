@@ -7,7 +7,7 @@
     </head>
     <body>
         <h1 id="titre">Page de connexion</h1>
-        <form id="form-connexion">
+        <form id="form-connexion" role = "form" method= "post" action = "{{ url_for('login')}}">
             <fieldset>
                 <div>
                     <label>Identifiant : </label>
