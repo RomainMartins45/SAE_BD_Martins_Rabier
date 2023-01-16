@@ -4,22 +4,12 @@
 {% endblock %}
 <link rel='stylesheet' type='text/css' media='screen' href='../static/main.css'>
 {% block content %}
-    <form class = "form-horizontal" role = "form" method = "post" action = "{{ url_for('trier_poneys')}}">
-        <div id="form">
-        <div>
-            <label id= "l1" for="nom" class ="col-sm-2 control-label">
-                Trier par poids
-            </label>
-            {{ f.poids(size=50) }}
-            <button id= "b1" type="submit" class="btn btn-defaut">Rechercher</button>
-        </div>
-        </div>
-    </form>
     <div class="sample">
         {% for x in poneys %}
         <div class ="poney">
+            <a>
             <img class = "img_poneys" src="{{ url_for('static', filename='images/background.jpg')}}"
-            alt="{{x.title}}" title="{{x.title}}" style="margin-bottom: 1%;"/>
+            alt="{{x.title}}" title="{{x.title}}" style="margin-bottom: 1%;"/></a>
             <p style="color: white;"> {{ x.nomP }} , {{ x.poidsMax }} kg</p>
         </div>
         {% endfor %}
