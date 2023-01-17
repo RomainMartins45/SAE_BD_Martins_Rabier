@@ -2,30 +2,23 @@
 {% block style %}
 {{ super () }}
 {% endblock %}
-        <link rel="stylesheet" href="../static/connexion.css">
-
-    </head>
-    <body>
-        <h1 id="titre">Page de connexion</h1>
-        <form id="form-connexion" role = "form" method= "post" action = "{{ url_for('login')}}">
-
+<link rel='stylesheet' type='text/css' media='screen' href='../static/main.css'>
         {% block content %}
         <h1 id="titre-c">Page de connexion</h1>
-        <form id="form-connexion">
-
+        <form id="form-connexion" role = "form" method = "post" action = "{{ url_for('login')}}">
             <fieldset>
                 <div>
                     <label>Identifiant : </label>
-                    <input type=”text” id="identifiant" name=”identifiant” class="zonetext" required>
+                    {{ form.username(size =50,class="form-control",placeholder ="Username") }}
                 </div>
                 <div id="motdepasse">
                     <label>Mot de passe :</label>
-                    <input type=”password” id="mdp" name=”mdp” class="zonetext" required>
+                    {{ form.mdp(size =50,class="form-control",placeholder ="Password") }}
                 </div>
-                <input type="submit" value="Se connecter" id="connexion">
+                <button type="submit" class="btn btn-defaut">Sign in</button>
                 <p id="access"></p>
-                <a href="page_inscription.html" id="inscription">S'inscrire</a>
             </fieldset>           
         </form>
+        <a href="page_inscription.html" id="inscription">S'inscrire</a>
 {% endblock %}
 </html>

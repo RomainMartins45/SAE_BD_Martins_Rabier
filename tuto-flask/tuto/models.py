@@ -20,6 +20,9 @@ class Client(db.Model):
     def getPoids(self):
         return self.poids
 
+    def getId(self):
+        return self.idClient
+
 class Poney(db.Model):
     idP = db.Column(db.Integer , primary_key=True)
     nomP = db.Column(db.String(42))
@@ -66,6 +69,9 @@ class Reserver(db.Model):
     idClient = db.Column(db.Integer,db.ForeignKey("client.idClient") , primary_key=True)
     idP = db.Column(db.Integer,db.ForeignKey("poney.idP") , primary_key=True)
 
+    def getIdCours(self):
+        return self.idCours
+
 @login_manager.user_loader
 def load_user(idClient):
     return Client.query.filter(Client.idClient == idClient).first()
@@ -87,6 +93,14 @@ def max_id_client():
 
     
 def get_poneys_poids(poids):
+    poneys_tri = []
+    poneys = Poney.query.all()
+    for poney in poneys:
+        if poney.getPoids() >= poids:
+            poneys_tri.append(poney)
+    return poneys_tri
+
+def get_poneys_poids2(poids):
     poneys_tri = []
     poneys = Poney.query.all()
     for poney in poneys:
