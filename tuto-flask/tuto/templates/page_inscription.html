@@ -2,13 +2,12 @@
 {% block style %}
 {{ super () }}
 {% endblock %}
+<link rel='stylesheet' type='text/css' media='screen' href='../static/main.css'>
 {% block content %}
         <h1 id="titre">Formulaire d'inscription</h1>
 
-        <form id="form-inscription" role = "form" method= "post" action = "{{ url_for('register')}}">
-            <fieldset>
 
-        <form id="form-inscription">
+        <form class = "form-inscription" role = "form" method = "post" action = "{{ url_for('register')}}">
             <fieldset id ="fieldset-inscription">
 
                 <div>

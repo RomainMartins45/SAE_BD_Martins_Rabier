@@ -2,6 +2,7 @@
 {% block style %}
 {{ super () }}
 {% endblock %}
+<link rel='stylesheet' href="{{ url_for('static',filename='../static/main.css')}}">
 {% block content %}
     <div class="sample">
         {% for x in poneys %}

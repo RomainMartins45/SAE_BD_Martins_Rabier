@@ -175,6 +175,5 @@ INSERT INTO cours VALUES(3,"Parcours",15,5,1,5,2,STR_TO_DATE("August 20 2017", "
 INSERT INTO cours VALUES(4,"test",15,6,1,3,1,STR_TO_DATE("August 10 2023", "%M %d %Y"),9);
 
 
-INSERT INTO reserver VALUES(1, 3, 1);
-INSERT INTO reserver VALUES(1, 4, 4);
+INSERT INTO reserver VALUES(1, 1, 4);
 

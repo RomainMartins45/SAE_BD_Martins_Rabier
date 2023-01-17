@@ -132,11 +132,11 @@ def login():
 @app.route("/logout/")
 def logout():
     logout_user()
-    return redirect(url_for("home.html"))
+    return redirect(url_for("home"))
 
 
 
-@app.route("/register", methods=["POST"])
+@app.route("/register", methods=("POST",))
 def register():
     nomC = request.form.get("nom")
     prenomC = request.form.get("prenom")
@@ -148,7 +148,7 @@ def register():
     user = Client.query.filter(Client.username==username).first() 
 
     if user:
-        return redirect(url_for('auth.inscription'))
+        return redirect(url_for('page_connexion.html'))
 
     id = max_id_client()
     if id is None:
@@ -158,5 +158,5 @@ def register():
     db.session.add(new_user)
     db.session.commit()
 
-    return redirect(url_for('auth.login'))
+    return redirect(url_for('home'))
     

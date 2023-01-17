@@ -2,7 +2,7 @@
 {% block style %}
 {{ super () }}
 {% endblock %}
-<link rel='stylesheet' type='text/css' media='screen' href='../static/main.css'>
+<link rel='stylesheet' href="{{ url_for('static',filename='main.css')}}">
 {% block content %}
 {% for cour in cours %}
 <div id="liste_participants">
