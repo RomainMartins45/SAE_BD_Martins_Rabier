@@ -171,6 +171,9 @@ INSERT INTO type_c VALUES(1,"Collectif");
 
 INSERT INTO cours VALUES(1,"Pleine air",12,2,1,1,1,STR_TO_DATE("August 10 2017", "%M %d %Y"),14);
 INSERT INTO cours VALUES(2,"Course",10,1,0,1,2,STR_TO_DATE("August 20 2017", "%M %d %Y"),9);
+INSERT INTO cours VALUES(3,"Parcours",15,5,1,5,2,STR_TO_DATE("August 20 2017", "%M %d %Y"),9);
+INSERT INTO cours VALUES(4,"test",15,6,1,3,1,STR_TO_DATE("August 10 2023", "%M %d %Y"),9);
+
 
 INSERT INTO reserver VALUES(1, 3, 1);
 INSERT INTO reserver VALUES(1, 4, 4);

@@ -15,7 +15,7 @@
                     <p>{{ cour.duree }} heure(s)</p>
                     <p>{{ cour.jma }} à {{ cour.heure }} heures</p>
                     <button type = "button" id = "button_poney">
-                    <a id="lien_poney" href="{{ url_for("choix_poney",idCours = cour.idCours,username = "user1") }}">Choisir un poney</a></button>
+                    <a id="lien_poney" href="{{ url_for("supprimer_reservation",idCours = cour.idCours,idClient = idClient) }}">Supprimer reservation</a></button>
             </section>
         </li>
     </ul>

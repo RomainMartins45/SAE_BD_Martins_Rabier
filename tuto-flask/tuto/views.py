@@ -9,20 +9,11 @@ from hashlib import sha256
 from flask_login import login_user, current_user,login_required,logout_user
 from .models import *
 
-SECRET_KEY = os.urandom(32)
-app.config['SECRET_KEY'] = SECRET_KEY
+app.config['SECRET_KEY'] = "4829a5df-b098-419a-9f38-a428997cfedb"
 
 @app.route("/")
 def home():
     return render_template("home.html")
-
-@app.route("/login")
-def connexion():
-    return render_template("page_connexion.html")
-
-@app.route("/register")
-def inscription():
-    return render_template("page_inscription.html")
 
 @app.route("/detail")
 def detail():
@@ -33,7 +24,7 @@ def detail():
 @app.route("/detail_trier",methods=["POST"])
 def trier_poneys():
     f = SearchForm()
-    poneys = get_poneys_poids(f.poids.data)
+    poneys = get_poneys_poids2(f.poids.data)
     return render_template("detail.html",poneys=poneys,f=f)
 
 
@@ -50,42 +41,70 @@ def cours_dispo():
     coursDispo = get_liste_cours_dispo()
     return render_template("cours.html",cours= coursDispo)
 
-@app.route("/choix_poney/<username><int:idCours>")
+@app.route("/choix_poney/<int:idCours>/<username>")
 def choix_poney(username,idCours):
     userConnecte = Client.query.filter(Client.username == username).first()
     poids = userConnecte.getPoids()
     listePoney = get_poneys_poids(poids)
-    return render_template("choix_poney.html",poneys= listePoney)
+    return render_template("choix_poney.html",poneys= listePoney,user=userConnecte,idCours = idCours)
+
+@app.route("/reserver/<int:idClient>/<int:idCours>/<int:idPoney>")
+def reserv(idClient,idCours,idPoney):
+    reserv = Reserver(idCours= idCours,idClient= idClient,idP=idPoney)
+    print(idCours,idClient,idPoney)
+    db.session.add(reserv)
+    db.session.commit()
+    return render_template("home.html")
+
+@app.route("/coursDe/<username>")
+def mes_cours(username):
+    userConnecte = Client.query.filter(Client.username == username).first()
+    idClient = userConnecte.getId()
+    res = Reserver.query.filter(Reserver.idClient == idClient).all()
+    cours = list()
+    for reservation in res:
+        idCours = reservation.getIdCours()
+        cour = Cours.query.filter(Cours.idCours == idCours).first()
+        cours.append(cour)
+    return render_template("mes_cours.html",cours= cours,idClient = idClient)
+
+@app.route("/sup_res/<int:idClient>/<int:idCours>")
+def supprimer_reservation(idCours,idClient):
+    Reserver.query.filter(Reserver.idCours == idCours, Reserver.idClient == idClient).delete()
+    db.session.commit()
+    return render_template("home.html")
+
 
 class LoginForm(FlaskForm):
     username = StringField("Username")
-    password = PasswordField("Password")
+    mdp = PasswordField("Password")
     next = HiddenField()
     
     def get_authenticated_user(self):
         user = Client.query.get(self.username.data)
         if user is None:
             return None
-        return user if self.password.data == user.mdp else None
+        return user if self.mdp.data == user.mdp else None
 
-@app.route("/login", methods =("GET","POST",))
+@app.route("/login/", methods =("GET","POST"))
 def login():
     f = LoginForm()
+    print(f.validate_on_submit())
     if not f.is_submitted():
-        f.next.data = request.args.get("next")
+        f.next.data = request.args.get('next')
     elif f.validate_on_submit():
         user = f.get_authenticated_user()
+        print(user)
         if user:
             login_user(user)
-            next = f.next.data or url_for("accueil")
+            next = f.next.data or url_for("home")
             return redirect(next)
-    if (current_user.is_authenticated):
-        return render_template("accueil.html",form=f)
+    return render_template("page_connexion.html",form=f)
 
 @app.route("/logout/")
 def logout():
     logout_user()
-    return redirect(url_for("accueil.html"))
+    return redirect(url_for("home.html"))
 
 @app.route("/register", methods=["POST"])
 def register():

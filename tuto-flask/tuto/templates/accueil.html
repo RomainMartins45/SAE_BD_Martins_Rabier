@@ -12,13 +12,12 @@
         <nav>
             <h2 class="logo">Grand Galop</h2>
             <ul>
-                <li><a href="{{ url_for("home") }}">Accueil</a></li>
-                <li><a href="{{ url_for("cours_dispo") }}">Reserver</a></li>
+                <li><a href="{{ url_for("home") }}">Accueil</a></li>    
                 <li><a href="{{ url_for("detail") }}">Poneys</a></li>
-                <li><a href="#">Profil</a></li>
-                <li><a href="#">Mes cours</a></li>
-                <li><a href="{{ url_for("connexion") }}">Log In</a></li>
-                <li><a href="{{ url_for("inscription") }}"">Register</a></li>
+                <li><a href="{{ url_for("mes_cours",username="user1") }}">Mes cours</a></li>
+                <li><a href="{{ url_for("cours_dispo") }}">Reserver</a></li>
+                <li><a href="{{ url_for("login") }}">Log In</a></li>
+                <li><a href="{{ url_for("register") }}"">Register</a></li>
             </ul>
         </nav>
     </div>
