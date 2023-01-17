@@ -1,4 +1,6 @@
 import os
+
+import flask
 from .app import app
 from flask import render_template, url_for, redirect, request
 from flask_wtf import FlaskForm
@@ -81,12 +83,12 @@ class LoginForm(FlaskForm):
     next = HiddenField()
     
     def get_authenticated_user(self):
-        user = Client.query.get(self.username.data)
+        user = Client.query.filter(Client.username == self.username.data).first()
         if user is None:
             return None
         return user if self.mdp.data == user.mdp else None
 
-@app.route("/login/", methods =("GET","POST"))
+@app.route("/login", methods =["GET","POST"])
 def login():
     f = LoginForm()
     print(f.validate_on_submit())
@@ -95,16 +97,30 @@ def login():
     elif f.validate_on_submit():
         user = f.get_authenticated_user()
         print(user)
-        if user:
+        if user is not None:
             login_user(user)
             next = f.next.data or url_for("home")
             return redirect(next)
     return render_template("page_connexion.html",form=f)
+# def login():
+#     form = LoginForm()
+#     if form.validate_on_submit():
+        
+#         login_user(form.get_authenticated_user())
+#         print("enfin")
+#         flask.flash('Logged in successfully.')
+
+#         next = flask.request.args.get('next')
+
+#         return flask.redirect(next or flask.url_for('accueil'))
+#     return flask.render_template('page_connexion.html', form=form)
 
 @app.route("/logout/")
 def logout():
     logout_user()
     return redirect(url_for("home.html"))
+
+
 
 @app.route("/register", methods=["POST"])
 def register():

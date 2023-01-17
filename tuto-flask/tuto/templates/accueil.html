@@ -14,8 +14,11 @@
             <ul>
                 <li><a href="{{ url_for("home") }}">Accueil</a></li>    
                 <li><a href="{{ url_for("detail") }}">Poneys</a></li>
+                {% if current_user.is_authenticated %}
                 <li><a href="{{ url_for("mes_cours",username="user1") }}">Mes cours</a></li>
                 <li><a href="{{ url_for("cours_dispo") }}">Reserver</a></li>
+                <li><a>{{ current_user.username }}</a></li>
+                {% endif %}
                 <li><a href="{{ url_for("login") }}">Log In</a></li>
                 <li><a href="{{ url_for("register") }}"">Register</a></li>
             </ul>
