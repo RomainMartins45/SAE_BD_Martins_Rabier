@@ -6,6 +6,7 @@
         {% block content %}
         <h1 id="titre-c">Page de connexion</h1>
         <form id="form-connexion" role = "form" method = "post" action = "{{ url_for('login')}}">
+            {{ form.csrf_token }}
             <fieldset>
                 <div>
                     <label>Identifiant : </label>

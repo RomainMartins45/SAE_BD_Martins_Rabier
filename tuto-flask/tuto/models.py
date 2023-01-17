@@ -5,7 +5,7 @@ from flask_login import UserMixin
 from .app import *
 from sqlalchemy import func
 
-class Client(db.Model):
+class Client(db.Model,UserMixin):
     idClient = db.Column(db.Integer , primary_key=True)
     nomC = db.Column(db.String(42))
     prenomC = db.Column(db.String(42))
@@ -21,6 +21,9 @@ class Client(db.Model):
         return self.poids
 
     def getId(self):
+        return self.idClient
+    
+    def get_id(self):
         return self.idClient
 
 class Poney(db.Model):
