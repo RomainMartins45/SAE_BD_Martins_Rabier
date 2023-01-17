@@ -31,6 +31,9 @@ class Poney(db.Model):
     def getPoids(self):
         return self.poidsMax
     
+    def get_idP(self):
+        return self.idP
+    
     def __repr__(self) -> str:
         return str(self.idP) + " " + self.nomP + " " + str(self.poidsMax)
 
@@ -63,6 +66,15 @@ class Cours(db.Model):
 
     def get_nb_pers(self):
         return self.nbPersonnes
+    
+    def get_jma(self):
+        return self.jma
+    
+    def get_heure(self):
+        return self.heure
+    
+    def get_type(self):
+        return self.type_cours
 
 class Reserver(db.Model):
     idCours = db.Column(db.Integer,db.ForeignKey("cours.idCours") , primary_key=True)
@@ -112,11 +124,13 @@ def get_nb_reserv(idCours):
     listeReserve = Reserver.query.filter(Reserver.idCours == idCours).all()
     return len(listeReserve)
 
-def get_liste_cours_dispo():
+def get_liste_cours_dispo(username):
     listeCoursDispo = list()
     listeCours = Cours.query.all()
+    client = Client.query.filter(Client.username == username).first()
     for cours in listeCours:
         if get_nb_reserv(cours.get_id()) < cours.get_nb_pers():
-            listeCoursDispo.append(cours)
+            if (Reserver.query.filter(Reserver.idCours == cours.get_id(), Reserver.idClient == client.getId()).all() == []):
+                listeCoursDispo.append(cours)
     return listeCoursDispo
 

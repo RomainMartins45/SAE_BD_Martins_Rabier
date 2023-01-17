@@ -36,9 +36,9 @@ def profil():
 def reservation():
     return render_template("reservation.html")
 
-@app.route("/cours")
-def cours_dispo():
-    coursDispo = get_liste_cours_dispo()
+@app.route("/cours/<username>")
+def cours_dispo(username):
+    coursDispo = get_liste_cours_dispo(username)
     return render_template("cours.html",cours= coursDispo)
 
 @app.route("/choix_poney/<int:idCours>/<username>")
@@ -46,6 +46,20 @@ def choix_poney(username,idCours):
     userConnecte = Client.query.filter(Client.username == username).first()
     poids = userConnecte.getPoids()
     listePoney = get_poneys_poids(poids)
+    coursRes = Cours.query.filter(Cours.idCours == idCours).first()
+    jmaCours = coursRes.get_jma()
+    heureCours = coursRes.get_heure()
+    for poney in listePoney:
+        reservation = Reserver.query.filter(Reserver.idP == poney.get_idP()).all()
+        for reserv in reservation:
+            idC = reserv.getIdCours()
+            cours = Cours.query.filter(Cours.idCours == idC).first()
+            jma = cours.get_jma()
+            heure = cours.get_heure()
+            print(jma,jmaCours,heure,heureCours,cours.get_type())
+            print(jma == jmaCours and heure == heureCours)
+            if jma == jmaCours and heure == heureCours:
+                listePoney.remove(poney)
     return render_template("choix_poney.html",poneys= listePoney,user=userConnecte,idCours = idCours)
 
 @app.route("/reserver/<int:idClient>/<int:idCours>/<int:idPoney>")
